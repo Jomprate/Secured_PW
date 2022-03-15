@@ -1,0 +1,46 @@
+{
+    "name": "UserInputs",
+    "maps": [
+        {
+            "name": "UIInputs",
+            "id": "5c69309e-aad0-4177-a101-ad0fb48fbe15",
+            "actions": [
+                {
+                    "name": "TabInputChange",
+                    "type": "Button",
+                    "id": "9e161ab1-98db-4d25-9920-30fa470ba745",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "bd11849b-b2e0-429c-a13d-d397448f5900",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "TabInputChange",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "PC",
+            "bindingGroup": "PC",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
