@@ -34,18 +34,21 @@ public class CreateNewUserController : MonoBehaviour
         {
             var DSM = DataSaveManager.instance;
             var PSM = PersistentSaveManager.instance;
-            
+            DSM.SaveFileName = DSM.RestSaveFileName;
             var go = Instantiate(userPrefab, contentP);
             go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = userInfo.UserName;
             
             userInfo.UserId = PSM.saveUsersObject.createdIds.ids[PSM.saveUsersObject.createdUsers.createdU];
             go.gameObject.GetComponent<UserDataInCont>().SetId(userInfo.UserId);
             
+            
+            go.gameObject.GetComponent<UserDataInCont>().SetEncryptedB(userInfo.Encrypt);
+            userInfo.encrypt = userInfo.Encrypt;
             DSM.SaveFileName += userInfo.UserId;
             _createDirectory.CreateNotEn(DSM.FolderName,DSM.SaveFileName,DSM.FileExtension);
             DSM._normalPath = _createDirectory.NormalPath;
-            userInfo.userAccessPath = DSM._normalPath;
-            
+            //userInfo.userAccessPath = DSM._normalPath;
+            Debug.Log("user info form creation"+userInfo.userAccessPath);
             switch (userInfo.Encrypt)
             {
                 case true: PSM.CreateNewUserWithEnData();
@@ -55,10 +58,23 @@ public class CreateNewUserController : MonoBehaviour
             }
             GameManager.instance.ChangeGameStateE(Enums.AppStates.Welcome);
             
-            DSM.CreatePersonalDataNotEn(DataSaveManager.instance.SaveFileName);
+            
+            
             userInfo.userAccessPath = DSM._normalPath;
+            
+            go.gameObject.GetComponent<UserDataInCont>().SetPath(userInfo.userAccessPath);
+            if (userInfo.Encrypt)
+            {
+                DSM.CreatePersonalDataEn(DataSaveManager.instance.SaveFileName);
+            }
+            else
+            {
+                DSM.CreatePersonalDataNotEn(DataSaveManager.instance.SaveFileName);
+            }
+            
             DSM.Save();
             PersistentSaveManager.instance.Save();
+            
         }
         
         
@@ -73,6 +89,11 @@ public class CreateNewUserController : MonoBehaviour
             GameObject go = Instantiate(userPrefab, contentP);
             go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
                 PersistentSaveManager.instance.saveUsersObject.userDataL[i].userName;
+            var UDC = go.GetComponent<UserDataInCont>();
+            UDC.id = PersistentSaveManager.instance.saveUsersObject.userDataL[i].userId;
+            UDC.path = PersistentSaveManager.instance.saveUsersObject.userDataL[i].userAccessPath;
+            UDC.encrypted = PersistentSaveManager.instance.saveUsersObject.userDataL[i].userEncrypt;
+
         }
     }
     

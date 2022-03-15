@@ -7,9 +7,11 @@ using UnityEngine.UI;
 public class UserDataInCont : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI idTMP;
+    private Button thisBtn;
     public int m_IndexNumber;
     public int id;
-    private Button thisBtn;
+    public string path;
+    public bool encrypted;
 
     private void Start()
     {
@@ -20,9 +22,26 @@ public class UserDataInCont : MonoBehaviour
         Debug.Log("Sibling Index : " + transform.GetSiblingIndex());
 
         thisBtn = GetComponent<Button>();
-        thisBtn.onClick.AddListener(() => { SetPasswordInfoInCons.instance.SetPasswordInfo(m_IndexNumber); });
+        thisBtn.onClick.AddListener(() => { ImPressed(); });
     }
 
+    public void ImPressed()
+    {
+        DataSaveManager.instance.SetPathToWork(path,encrypted);
+        
+    }
+    
+    public void SetPath(string path)
+    {
+        this.path = path;
+    }
+
+    public void SetEncryptedB(bool encrypt)
+    {
+        encrypted = encrypt;
+        Debug.Log( "set encryptedB"+encrypted);
+    }
+    
     public void SetPasswordData(string id)
     {
         idTMP.text = id;

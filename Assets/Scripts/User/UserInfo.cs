@@ -17,6 +17,7 @@ public class UserInfo : MonoBehaviour
     public string UserName { get; set; }
     public string UserPassword { get; set; }
     public bool Encrypt { get; set; }
+    public bool encrypt;
     
     public bool UserAccepted { get; set; }
 
@@ -64,6 +65,7 @@ public class UserInfo : MonoBehaviour
     public void ChangeEncryptState()
     {
         Encrypt = !Encrypt;
+        encrypt = Encrypt;
         encryptImage.color = Encrypt ? greenC : redC;
     }
     

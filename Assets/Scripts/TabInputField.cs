@@ -20,10 +20,8 @@ public class TabInputField : MonoBehaviour
     {
         _getInputFields = GetComponent<GetInputFields>();
         _inputManager = InputManager.instance;
-        //_inputManager.userInputs.UIInputs.TabInputChange.performed += context => { ChangeInputSelected(); };
         uiInputs = _inputManager.userInputs.UIInputs.TabInputChange;
         
-        //_inputFields = _getInputFields.GetFields();
         _inputFields = _getInputFields.GetFieldsW();
         EnableScript(false);
     }
@@ -42,7 +40,7 @@ public class TabInputField : MonoBehaviour
 
     private void ChangeInputSelected(InputAction.CallbackContext context)
     {
-        Debug.Log("pRESSED");
+        Debug.Log("Tab Pressed");
         if (InputSelected >= _inputFields.Count -1)  {
             InputSelected = 0;
         }else InputSelected += 1;
