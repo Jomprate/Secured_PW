@@ -19,7 +19,7 @@ public class UserDataInCont : MonoBehaviour
         m_IndexNumber = 0;
         m_IndexNumber= transform.GetSiblingIndex();
         //Output the Sibling Index to the console
-        Debug.Log("Sibling Index : " + transform.GetSiblingIndex());
+        //Debug.Log("Sibling Index : " + transform.GetSiblingIndex());
 
         thisBtn = GetComponent<Button>();
         thisBtn.onClick.AddListener(() => { ImPressed(); });
@@ -27,6 +27,8 @@ public class UserDataInCont : MonoBehaviour
 
     public void ImPressed()
     {
+        SetPasswordInfoInCons.instance.ResetPasswordInfo();
+        Debug.Log("resettedddddddddddddddd");
         DataSaveManager.instance.SetPathToWork(path,encrypted);
         
     }
@@ -39,7 +41,7 @@ public class UserDataInCont : MonoBehaviour
     public void SetEncryptedB(bool encrypt)
     {
         encrypted = encrypt;
-        Debug.Log( "set encryptedB"+encrypted);
+        //Debug.Log( "set encryptedB"+encrypted);
     }
     
     public void SetPasswordData(string id)

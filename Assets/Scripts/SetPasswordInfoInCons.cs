@@ -24,13 +24,26 @@ public class SetPasswordInfoInCons : MonoBehaviour
         _tmpInputFields = _getInputFields._tmpInputFields;
     }
 
-    public void SetPasswordInfo(int selected) {
-        if (DataSaveManager.instance.saveDataObject == null) return;
-            passwordIdTmp.text = DataSaveManager.instance.saveDataObject.PasswordDataL[selected].passwordId;
-            _tmpInputFields[0].text = DataSaveManager.instance.saveDataObject.PasswordDataL[selected].email;
-            _tmpInputFields[1].text = DataSaveManager.instance.saveDataObject.PasswordDataL[selected].userName;
-            _tmpInputFields[2].text = DataSaveManager.instance.saveDataObject.PasswordDataL[selected].password;
-            _tmpInputFields[3].text = DataSaveManager.instance.saveDataObject.PasswordDataL[selected].description;
+   
+
+    public void SetPasswordInfo(int selected)
+    {
+        var DSM = DataSaveManager.instance;
+        if (DSM.saveDataObject == null) return;
+            passwordIdTmp.text = DSM.saveDataObject.PasswordDataL[selected].passwordId;
+            _tmpInputFields[0].text = DSM.saveDataObject.PasswordDataL[selected].email;
+            _tmpInputFields[1].text = DSM.saveDataObject.PasswordDataL[selected].userName;
+            _tmpInputFields[2].text = DSM.saveDataObject.PasswordDataL[selected].password;
+            _tmpInputFields[3].text = DSM.saveDataObject.PasswordDataL[selected].description;
+    }
+
+    public void ResetPasswordInfo()
+    {
+        passwordIdTmp.text = String.Empty;
+        foreach (var tmpInputField in _tmpInputFields)
+        {
+            tmpInputField.text = String.Empty;
+        }
     }
 
 }

@@ -11,6 +11,7 @@ public static class Enums
         Welcome,
         MainMenu,
         CreateNewUser,
+        CheckUser,
         PasswordCont,
         StartGame
     }
@@ -20,9 +21,10 @@ public static class Enums
         WelcomeCanvas,
         CreateNewUser,
         SelectEnKeys,
-        CheckUserInfo,
+        CheckUserPassword,
         PasswordContainer,
-        CreateNewPassword
+        CreateNewPassword,
+        
         
     }
     
@@ -30,6 +32,7 @@ public static class Enums
     {
         UserInfo,
         Keys,
-        passwordData
+        PasswordData,
+        Password
     }
 }

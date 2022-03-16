@@ -41,6 +41,8 @@ public class DataSaveManager : MonoBehaviour
         RestSaveFileName = "save";
         FolderName = "SD";
         FileExtension = ".SS";
+        
+        
     }
     
     public void Start()
@@ -55,11 +57,11 @@ public class DataSaveManager : MonoBehaviour
             PasswordDataL = new List<PasswordData>(),
         };
         json = JsonUtility.ToJson(saveDataObject);
-        enJson = AESHandler.AESEncryption(json);;
+        enJson = AESHandler.AesEncryption(json);;
 
        
         Load(); 
-        PasswordContController.instance.FillCont();
+        
     }
 
     public void SetPathToWork(string path, bool encrypted)
@@ -67,9 +69,11 @@ public class DataSaveManager : MonoBehaviour
         Debug.Log("Encrypted in SetPath" + encrypted);
         _normalPath = path;
         np = _normalPath;
+        Debug.Log(np);
+        
         Encrypted = encrypted;
         Debug.Log("Encrypted in SetPath" + Encrypted);
-        Save();
+        
         Load();
         GameManager.instance.ChangeGameStateE(Enums.AppStates.PasswordCont);
         PasswordContController.instance.FillCont();
@@ -80,7 +84,11 @@ public class DataSaveManager : MonoBehaviour
     {
         
     }
-
+    private void CreateSaveDataObject() {
+        saveDataObject = new SaveDataObject {
+            PasswordDataL = new List<PasswordData>(),
+        };
+    }
     
 
     public void CreatePersonalDataNotEn(string saveFileName)
@@ -88,30 +96,32 @@ public class DataSaveManager : MonoBehaviour
         _createDirectory.CreateNotEn(FolderName,saveFileName,FileExtension);
         _normalPath = _createDirectory.NormalPath;
         
-        
         saveDataObject = new SaveDataObject
         {
             PasswordDataL = new List<PasswordData>(),
         };
+        
         json = JsonUtility.ToJson(saveDataObject);
-        enJson = AESHandler.AESEncryption(json);;
+        enJson = AESHandler.AesEncryption(json);
+        Encrypted = false;
         Save();
        
         //Load(); 
         
     }
+
     public void CreatePersonalDataEn(string saveFileName)
     {
         _createDirectory.CreateNotEn(FolderName,saveFileName,FileExtension);
         _normalPath = _createDirectory.NormalPath;
         
-        
         saveDataObject = new SaveDataObject
         {
             PasswordDataL = new List<PasswordData>(),
         };
         json = JsonUtility.ToJson(saveDataObject);
-        enJson = AESHandler.AESEncryption(json);;
+        enJson = AESHandler.AesEncryption(json);;
+        Encrypted = true;
         Save();
        
         //Load(); 
@@ -119,48 +129,29 @@ public class DataSaveManager : MonoBehaviour
     }
 
     
-
-    private void Update()
-    {
-        // if (Input.GetKeyDown(KeyCode.N))
-        // {
-        //     Save();
-        // }
-        // if (Input.GetKeyDown(KeyCode.P))
-        // {
-        //     DeleteSave();
-        // }
-    }
-
     
 
-    public void LoadUsers()
-    {
-        
-    }
     
     public void Save()
     {
-        saveDataObject = new SaveDataObject
-        {
+        saveDataObject = new SaveDataObject {
             PasswordDataL = saveDataObject.PasswordDataL,
-            
         }; 
         json = JsonUtility.ToJson(saveDataObject);
-        enJson = AESHandler.AESEncryption(json);
-         if (Encrypted)
+        enJson = AESHandler.AesEncryption(json);
+         switch (Encrypted)
          {
-             Debug.Log("access to encrypt");
-             enJson = AESHandler.AESEncryption(enJson);
-             File.WriteAllText(_normalPath,enJson);
+             case true:
+                 Debug.Log("access to encrypt");
+                 enJson = AESHandler.AesEncryption(enJson);
+                 File.WriteAllText(_normalPath,enJson);
+                 return;
+             case false:
+                 Debug.Log("access to dont encrypt");
+                 File.WriteAllText(_normalPath,json);
+                 Debug.Log("saved in " + _normalPath);
+                 break;
          }
-         else
-         {  Debug.Log("access to dont encrypt");
-             File.WriteAllText(_normalPath,json);
-         }
-        /*File.WriteAllText(_normalPath,json);
-        File.WriteAllText(_encryptedPath,enJson);*/
-        
     }
 
     public void Load()
@@ -173,16 +164,21 @@ public class DataSaveManager : MonoBehaviour
             switch (Encrypted)
             {
                 case true:
-                    saveEnString = AESHandler.AESDecryption(saveEnString);
+                    Debug.Log(saveEnString);
+                    saveEnString = AESHandler.AesDecryption(saveEnString);
+                    saveEnString = AESHandler.AesDecryption(saveEnString);
+                    Debug.Log(saveEnString);
                     loadedDataObject = JsonUtility.FromJson<SaveDataObject>(saveEnString);
                     saveDataObject.PasswordDataL = loadedDataObject.PasswordDataL;
                     Save();
+                    
                     
                     break;
                 case false:
                     loadedDataObject = JsonUtility.FromJson<SaveDataObject>(saveString);
                     saveDataObject.PasswordDataL = loadedDataObject.PasswordDataL;
                     Save();
+                    
                     
                     break;
             }
@@ -191,7 +187,7 @@ public class DataSaveManager : MonoBehaviour
         else
         {
             Save();
-            Load();
+            
         }
         /*if (File.Exists(_normalPath) && File.Exists(_encryptedPath))
         {

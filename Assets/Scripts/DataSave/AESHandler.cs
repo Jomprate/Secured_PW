@@ -17,7 +17,7 @@ public static class AESHandler
 
     
     //AES - Encription 
-    public static string AESEncryption(string inputData)
+    public static string AesEncryption(string inputData)
     {
         string key = "A60A5770FE5E7AB200BA9CFC94E4E8B0"; //set any string of 32 chars
         string iv = "1234567887654321"; //set any string of 16 chars
@@ -39,7 +39,7 @@ public static class AESHandler
     }
 
     //AES -  Decryption
-    public static string AESDecryption(string inputData)
+    public static string AesDecryption(string inputData)
     {
         string key = "A60A5770FE5E7AB200BA9CFC94E4E8B0"; //set any string of 32 chars
         string iv = "1234567887654321"; //set any string of 16 chars

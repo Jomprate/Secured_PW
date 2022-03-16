@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UserInfo _userInfo;
     [SerializeField] private CreateNewUserController createNewUserController;
     [SerializeField] private PasswordContController passwordContController;
+    [SerializeField] private CheckUserPassword _checkUserPassword;
     
     
     
@@ -31,8 +32,8 @@ public class GameManager : MonoBehaviour
     public CanvasGroup SelectEnKeysUser { get; set; }
     public CanvasGroup selectEnKeysUser;
     
-    public CanvasGroup CheckUserInfo { get; set; }
-    public CanvasGroup checkUserInfo;
+    public CanvasGroup CheckUserP { get; set; }
+    public CanvasGroup checkUserP;
     
     public CanvasGroup PasswordContainer { get; set; }
     public CanvasGroup passwordContainer;
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
         _getAllPanels = FindObjectOfType<GetAllPanels>();
         _getAllPanels.Initialize();
         
+        
     }
 
     private void Start()
@@ -51,9 +53,9 @@ public class GameManager : MonoBehaviour
         /*AppEvents.Instance.OnAppStateChange += ChangeGameStateE;
         _getAllPanels = FindObjectOfType<GetAllPanels>();
         _getAllPanels.Initialize();*/
-        
         SetAllPanels();
         ChangeGameStateE(Enums.AppStates.Initialization);
+        
     }
 
     public void SetAllPanels()
@@ -62,7 +64,9 @@ public class GameManager : MonoBehaviour
         welcomeCanvas = WelcomeCanvas;
         CreateNewUser = _getAllPanels.CanvasV[1].CanvasGroupP;
         createNewUser = CreateNewUser;
-        PasswordContainer = _getAllPanels.CanvasV[2].CanvasGroupP;
+        CheckUserP = _getAllPanels.CanvasV[2].CanvasGroupP;
+        checkUserP = CheckUserP;
+        PasswordContainer = _getAllPanels.CanvasV[3].CanvasGroupP;
         passwordContainer = PasswordContainer;
 
         TurnOffAllPanels();
@@ -101,16 +105,24 @@ public class GameManager : MonoBehaviour
                 persistentSaveManager.Initialize();
                 _userInfo.Initialize();
                 createNewUserController.Initialize();
+                _checkUserPassword.Initialize();
                 passwordContController.Initialize();
+                
+                
+                
                 ChangeGameStateE(Enums.AppStates.Welcome);
                 break;
             case Enums.AppStates.Welcome:
                 WelcomeCanvasSec();
+                PasswordContController.instance.FillCont();
                 break;
             case Enums.AppStates.MainMenu:
                 break;
             case Enums.AppStates.CreateNewUser:
                 CreateNewUserSec();
+                break;
+            case Enums.AppStates.CheckUser:
+                CheckUserPasswordSec();
                 break;
             case Enums.AppStates.PasswordCont:
                 PasswordContSec();
@@ -118,7 +130,8 @@ public class GameManager : MonoBehaviour
                 break;
             case Enums.AppStates.StartGame:
                 break;
-            
+
+           
             default:
                 throw new ArgumentOutOfRangeException(nameof(gameState), gameState, null);
         }
@@ -127,7 +140,9 @@ public class GameManager : MonoBehaviour
     public void WelcomeCanvasSec()
     {
         TurnOffAllPanels();
+        passwordContController.RemoveCont();
         SetCanvasState.SetState(true,WelcomeCanvas);
+        createNewUserController.UpdateUsers();
         //WelcomeCanvas.gameObject.GetComponent<TabInputField>().EnableScript(true);
         
     }
@@ -137,6 +152,12 @@ public class GameManager : MonoBehaviour
         TurnOffAllPanels();
         SetCanvasState.SetState(true,CreateNewUser);
         CreateNewUser.gameObject.GetComponent<TabInputField>().EnableScript(true);
+    }
+
+    public void CheckUserPasswordSec()
+    {
+        TurnOffAllPanels();
+        SetCanvasState.SetState(true,checkUserP);
     }
 
     public void PasswordContSec()
