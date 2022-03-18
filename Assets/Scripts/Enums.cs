@@ -13,6 +13,7 @@ public static class Enums
         CreateNewUser,
         CheckUser,
         PasswordCont,
+        CreateNewPw,
         StartGame
     }
     

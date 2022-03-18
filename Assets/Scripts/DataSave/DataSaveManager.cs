@@ -12,7 +12,7 @@ public class DataSaveManager : MonoBehaviour
     private CreateDirectory _createDirectory;
     
     
-    public string _normalPath { get; set; }
+    public string _Path { get; set; }
     public string np;
     
     //private const string FolderName = "SD";
@@ -49,7 +49,7 @@ public class DataSaveManager : MonoBehaviour
     {
         //Directory.CreateDirectory(Environment.ExpandEnvironmentVariables("%USERPROFILE%\\" + FolderName));
         _createDirectory.Create(FolderName,SaveFileName,EnSaveFileName,FileExtension);
-        _normalPath = _createDirectory.NormalPath;
+        _Path = _createDirectory.NormalPath;
         
         
         saveDataObject = new SaveDataObject
@@ -66,9 +66,8 @@ public class DataSaveManager : MonoBehaviour
 
     public void SetPathToWork(string path, bool encrypted)
     {
-        Debug.Log("Encrypted in SetPath" + encrypted);
-        _normalPath = path;
-        np = _normalPath;
+        _Path = path;
+        np = _Path;
         Debug.Log(np);
         
         Encrypted = encrypted;
@@ -80,10 +79,6 @@ public class DataSaveManager : MonoBehaviour
         
     }
     
-    public void Initialize()
-    {
-        
-    }
     private void CreateSaveDataObject() {
         saveDataObject = new SaveDataObject {
             PasswordDataL = new List<PasswordData>(),
@@ -94,7 +89,7 @@ public class DataSaveManager : MonoBehaviour
     public void CreatePersonalDataNotEn(string saveFileName)
     {
         _createDirectory.CreateNotEn(FolderName,saveFileName,FileExtension);
-        _normalPath = _createDirectory.NormalPath;
+        _Path = _createDirectory.NormalPath;
         
         saveDataObject = new SaveDataObject
         {
@@ -113,7 +108,7 @@ public class DataSaveManager : MonoBehaviour
     public void CreatePersonalDataEn(string saveFileName)
     {
         _createDirectory.CreateNotEn(FolderName,saveFileName,FileExtension);
-        _normalPath = _createDirectory.NormalPath;
+        _Path = _createDirectory.NormalPath;
         
         saveDataObject = new SaveDataObject
         {
@@ -128,10 +123,14 @@ public class DataSaveManager : MonoBehaviour
         
     }
 
-    
-    
+    public void DeletePassword(int index)
+    {
+        saveDataObject.PasswordDataL.RemoveAt(index);
+        Save();
+        PasswordContController.instance.FillCont();
+        
+    }
 
-    
     public void Save()
     {
         saveDataObject = new SaveDataObject {
@@ -142,25 +141,22 @@ public class DataSaveManager : MonoBehaviour
          switch (Encrypted)
          {
              case true:
-                 Debug.Log("access to encrypt");
                  enJson = AESHandler.AesEncryption(enJson);
-                 File.WriteAllText(_normalPath,enJson);
+                 File.WriteAllText(_Path,enJson);
                  return;
              case false:
-                 Debug.Log("access to dont encrypt");
-                 File.WriteAllText(_normalPath,json);
-                 Debug.Log("saved in " + _normalPath);
+                 File.WriteAllText(_Path,json);
                  break;
          }
     }
 
     public void Load()
     {
-        if (File.Exists(_normalPath))
+        if (File.Exists(_Path))
         {
             SaveDataObject loadedDataObject;
-            string saveString = File.ReadAllText(_normalPath);
-            string saveEnString = File.ReadAllText(_normalPath);
+            string saveString = File.ReadAllText(_Path);
+            string saveEnString = File.ReadAllText(_Path);
             switch (Encrypted)
             {
                 case true:
@@ -171,15 +167,11 @@ public class DataSaveManager : MonoBehaviour
                     loadedDataObject = JsonUtility.FromJson<SaveDataObject>(saveEnString);
                     saveDataObject.PasswordDataL = loadedDataObject.PasswordDataL;
                     Save();
-                    
-                    
                     break;
                 case false:
                     loadedDataObject = JsonUtility.FromJson<SaveDataObject>(saveString);
                     saveDataObject.PasswordDataL = loadedDataObject.PasswordDataL;
                     Save();
-                    
-                    
                     break;
             }
             
@@ -187,60 +179,29 @@ public class DataSaveManager : MonoBehaviour
         else
         {
             Save();
-            
         }
-        /*if (File.Exists(_normalPath) && File.Exists(_encryptedPath))
-        {
-            
-            SaveDataObject loadedDataObject;
-            string saveString = File.ReadAllText(_normalPath);
-            string saveEnString = File.ReadAllText(_encryptedPath);
-            if (Encrypt)
-            {
-                saveEnString = AESHandler.AESDecryption(saveEnString);
-                loadedDataObject = JsonUtility.FromJson<SaveDataObject>(saveEnString);
-            }
-            else
-            {
-                loadedDataObject = JsonUtility.FromJson<SaveDataObject>(saveString);
-            }
-
-            saveDataObject.PasswordDataL = loadedDataObject.PasswordDataL;
-            
-
-            //Load();
-        }
-        else
-        {
-            Save();
-            Load();
-        }*/
-        
     }
 
     public void DeleteSave()
     {
         saveDataObject.PasswordDataL.Clear();
         
-        File.Delete(_normalPath);
+        File.Delete(_Path);
         
         //Load();
         Save();
         
     }
-
-
-    
     
     public void CreateNewPasswordData()
     {
         var createNewPassword = CreateNewPassword.instance;
         PasswordData data = new PasswordData(
-            createNewPassword.passwordId,
-            createNewPassword.email,
-            createNewPassword.userName,
-            createNewPassword.password,
-            createNewPassword.description
+            createNewPassword.PasswordId,
+            createNewPassword.Email,
+            createNewPassword.UserName,
+            createNewPassword.Password,
+            createNewPassword.Description
         );
         
         saveDataObject.PasswordDataL.Add(data);

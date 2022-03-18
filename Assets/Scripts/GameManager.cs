@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CreateNewUserController createNewUserController;
     [SerializeField] private PasswordContController passwordContController;
     [SerializeField] private CheckUserPassword _checkUserPassword;
+    [SerializeField] private CreateNewPassword _createNewPassword;
     
     
     
@@ -37,6 +38,10 @@ public class GameManager : MonoBehaviour
     
     public CanvasGroup PasswordContainer { get; set; }
     public CanvasGroup passwordContainer;
+
+    public CanvasGroup CreateNewPw { get; set; }
+    public CanvasGroup createNewPw;
+
     private void Awake()
     {
         instance = this;
@@ -68,6 +73,8 @@ public class GameManager : MonoBehaviour
         checkUserP = CheckUserP;
         PasswordContainer = _getAllPanels.CanvasV[3].CanvasGroupP;
         passwordContainer = PasswordContainer;
+        CreateNewPw = _getAllPanels.CanvasV[4].CanvasGroupP;
+        createNewPw = CreateNewPw;
 
         TurnOffAllPanels();
     }
@@ -107,6 +114,7 @@ public class GameManager : MonoBehaviour
                 createNewUserController.Initialize();
                 _checkUserPassword.Initialize();
                 passwordContController.Initialize();
+                _createNewPassword.Initialize();
                 
                 
                 
@@ -126,10 +134,13 @@ public class GameManager : MonoBehaviour
                 break;
             case Enums.AppStates.PasswordCont:
                 PasswordContSec();
-                
+                break;
+            case Enums.AppStates.CreateNewPw:
+                CreateNewPwSec();
                 break;
             case Enums.AppStates.StartGame:
                 break;
+
 
            
             default:
@@ -143,6 +154,7 @@ public class GameManager : MonoBehaviour
         passwordContController.RemoveCont();
         SetCanvasState.SetState(true,WelcomeCanvas);
         createNewUserController.UpdateUsers();
+        CreateNewUser.gameObject.GetComponent<TabInputField>().EnableScript(false);
         //WelcomeCanvas.gameObject.GetComponent<TabInputField>().EnableScript(true);
         
     }
@@ -157,15 +169,24 @@ public class GameManager : MonoBehaviour
     public void CheckUserPasswordSec()
     {
         TurnOffAllPanels();
-        SetCanvasState.SetState(true,checkUserP);
+        SetCanvasState.SetState(true,CheckUserP);
+        CreateNewUser.gameObject.GetComponent<TabInputField>().EnableScript(false);
     }
 
     public void PasswordContSec()
     {
         TurnOffAllPanels();
-        SetCanvasState.SetState(true,passwordContainer);
-        
+        SetCanvasState.SetState(true,PasswordContainer);
+        CreateNewUser.gameObject.GetComponent<TabInputField>().EnableScript(false);
+        createNewPw.gameObject.GetComponent<TabInputField>().EnableScript(false);
     }
-    
+
+    public void CreateNewPwSec()
+    {
+        TurnOffAllPanels();
+        SetCanvasState.SetState(true,CreateNewPw);
+        CreateNewUser.gameObject.GetComponent<TabInputField>().EnableScript(false);
+        createNewPw.gameObject.GetComponent<TabInputField>().EnableScript(true);
+    }
     
 }

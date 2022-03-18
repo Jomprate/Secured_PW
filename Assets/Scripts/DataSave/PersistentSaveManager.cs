@@ -89,7 +89,7 @@ public class PersistentSaveManager : MonoBehaviour
    public void CreateNewUserWithoutEnData() {
       UserData data = CreateUserData();
       
-      data.userAccessPath = DataSaveManager.instance._normalPath;
+      data.userAccessPath = DataSaveManager.instance._Path;
       saveUsersObject.createdUsers.createdU += 1;
       saveUsersObject.activeUsers.actUsers += 1;
       saveUsersObject.userDataL.Add(data);
@@ -102,7 +102,7 @@ public class PersistentSaveManager : MonoBehaviour
    public void CreateNewUserWithEnData() {
       UserData data = CreateUserData();
       
-      data.userAccessPath = DataSaveManager.instance._normalPath;
+      data.userAccessPath = DataSaveManager.instance._Path;
       saveUsersObject.createdUsers.createdU += 1;
       saveUsersObject.activeUsers.actUsers += 1;
       saveUsersObject.userDataL.Add(data);
@@ -111,7 +111,10 @@ public class PersistentSaveManager : MonoBehaviour
       _encryptedPath = _createDirectory.EncryptedPath;
       Save();
    }
-   
-   
+
+   public void DeleteUser()
+   {
+      
+   }
    
 }

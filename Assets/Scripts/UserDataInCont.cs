@@ -28,7 +28,6 @@ public class UserDataInCont : MonoBehaviour
     public void ImPressed()
     {
         SetPasswordInfoInCons.instance.ResetPasswordInfo();
-        Debug.Log("resettedddddddddddddddd");
         DataSaveManager.instance.SetPathToWork(path,encrypted);
         
     }

@@ -8,21 +8,21 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(GetInputFields))]
 public class TabInputField : MonoBehaviour
 {
-    public InputManager _inputManager;
-    public GetInputFields _getInputFields;
-    public List<TMP_InputField> _inputFields;
+    public InputManager inputManager;
+    public GetInputFields getInputFields;
+    public List<TMP_InputField> inputFields;
 
-    public int InputSelected;
+    public int inputSelected;
 
-    private InputAction uiInputs;
+    private InputAction _uiInputs;
 
     public void Awake()
     {
-        _getInputFields = GetComponent<GetInputFields>();
-        _inputManager = InputManager.instance;
-        uiInputs = _inputManager.userInputs.UIInputs.TabInputChange;
+        getInputFields = GetComponent<GetInputFields>();
+        inputManager = InputManager.instance;
+        _uiInputs = inputManager.userInputs.UIInputs.TabInputChange;
         
-        _inputFields = _getInputFields.GetFieldsW();
+        inputFields = getInputFields.GetFieldsW();
         EnableScript(false);
     }
 
@@ -30,9 +30,9 @@ public class TabInputField : MonoBehaviour
     {
         switch (enable)
         {
-            case true: uiInputs.performed +=  ChangeInputSelected; 
+            case true: _uiInputs.performed +=  ChangeInputSelected; 
                 break;
-            case false: uiInputs.performed -=  ChangeInputSelected; 
+            case false: _uiInputs.performed -=  ChangeInputSelected; 
                 break;
         }
         
@@ -41,15 +41,15 @@ public class TabInputField : MonoBehaviour
     private void ChangeInputSelected(InputAction.CallbackContext context)
     {
         Debug.Log("Tab Pressed");
-        if (InputSelected >= _inputFields.Count -1)  {
-            InputSelected = 0;
-        }else InputSelected += 1;
+        if (inputSelected >= inputFields.Count -1)  {
+            inputSelected = 0;
+        }else inputSelected += 1;
         SelectInputField();
     }
 
     private void SelectInputField()
     {
-        _inputFields[InputSelected].Select();
+        inputFields[inputSelected].Select();
     }
     
     

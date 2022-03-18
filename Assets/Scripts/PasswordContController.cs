@@ -8,6 +8,7 @@ public class PasswordContController : MonoBehaviour
     public static PasswordContController instance;
     [SerializeField] private Transform contentTr;
     [SerializeField] private GameObject passwordPrefab;
+    [SerializeField] private List<GameObject> passwordsObjs;
 
     public void Initialize()
     {
@@ -21,26 +22,30 @@ public class PasswordContController : MonoBehaviour
         go.GetComponent<PasswordDataInCont>().SetPasswordData(id);
         
         go.transform.SetParent(contentTr);
+        passwordsObjs.Add(go);
+        SetIndex();
     }
 
-    public void FillCont()
-    {
+    private void SetIndex() {
+        for (var i = 0; i < passwordsObjs.Count; i++)
+        {
+            passwordsObjs[i].GetComponent<PasswordDataInCont>().m_IndexNumber = i;
+        }
+    }
+    
+    public void FillCont() {
         RemoveCont();
         foreach (var passwordData in DataSaveManager.instance.saveDataObject.PasswordDataL)
         {
             AddNewPassword(passwordData.passwordId);
         }
-        
     }
 
-    public void RemoveCont()
-    {
-        foreach (Transform child in contentTr)
-        {
+    public void RemoveCont() {
+        passwordsObjs.Clear();
+        foreach (Transform child in contentTr) {
             Destroy(child.gameObject);
         }
-            
     }
-    
 
 }

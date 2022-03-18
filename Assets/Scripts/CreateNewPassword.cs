@@ -3,49 +3,61 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class CreateNewPassword : MonoBehaviour
 {
     public static CreateNewPassword instance;
+
+    [SerializeField] private Button CreateNewPw_Btn;
     
-    public string passwordId { get; set; }
-    public string email { get; set; }
-    public string userName { get; set; }
-    public string password { get; set; }
-    public string description { get; set; }
+    public string PasswordId { get; set; }
+    public string Email { get; set; }
+    public string UserName { get; set; }
+    public string Password { get; set; }
+    public string Description { get; set; }
 
 
     private GetInputFields _getInputFields;
     public List<TMP_InputField> _tmpInputFields;
-    
-    
+
+    public void Initialize()
+    {
+        instance = this;
+        
+        if (_getInputFields == null) { _getInputFields = GetComponent<GetInputFields>(); }
+        
+        _tmpInputFields = _getInputFields._tmpInputFields;
+        
+        CreateNewPw_Btn.onClick.AddListener(() => { CreateNewPw(); });
+    }
     
     private void OnEnable()
     {
-        instance = this;
-        if (_getInputFields == null) { _getInputFields = GetComponent<GetInputFields>(); }
-        _tmpInputFields = _getInputFields._tmpInputFields;
+        
     }
 
-    private void NewPasswordInfo()
-    {
-        passwordId = _tmpInputFields[0].text;
-        email = _tmpInputFields[1].text;
-        userName = _tmpInputFields[2].text;
-        password = _tmpInputFields[3].text;
-        description = _tmpInputFields[4].text;
-        
-        
-            
+    private void CreateNewPw() {
+        var dsm = DataSaveManager.instance;
+            PasswordId  = _tmpInputFields[0].text;
+            Email       = _tmpInputFields[1].text;
+            UserName    = _tmpInputFields[2].text;
+            Password    = _tmpInputFields[3].text;
+            Description = _tmpInputFields[4].text;
+        dsm.CreateNewPasswordData();
+        ResetPasswordConsole();
+        GameManager.instance.PasswordContSec();
     }
+    
+    
 
     public void ResetPasswordConsole()
     {
-        passwordId = null;
-        email = null;
-        userName = null;
-        password = null;
-        description = null;
+        PasswordId = null;
+        Email = null;
+        UserName = null;
+        Password = null;
+        Description = null;
 
         foreach (var inputField in _tmpInputFields)
         {

@@ -56,8 +56,8 @@ public class CreateNewUserController : MonoBehaviour
             
             
             _createDirectory.CreateNotEn(DSM.FolderName,DSM.SaveFileName,DSM.FileExtension);
-            DSM._normalPath = _createDirectory.NormalPath;
-            userInfo.userAccessPath = DSM._normalPath;
+            DSM._Path = _createDirectory.NormalPath;
+            userInfo.userAccessPath = DSM._Path;
             go.gameObject.GetComponent<UserDataInCont>().SetPath(userInfo.userAccessPath);
             
             switch (userInfo.Encrypt)
