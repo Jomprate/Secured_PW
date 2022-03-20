@@ -12,18 +12,23 @@ public class UserInfo : MonoBehaviour
     public int UserId { get; set; }
     
     public string userAccessPath { get; set; }
-    
     public bool userEncrypt { get; set; }
     public string UserName { get; set; }
     public string UserPassword { get; set; }
     public bool Encrypt { get; set; }
     public bool encrypt;
-    
+    public bool UsePassword { get; set; }
+    public bool usePassword;
     public bool UserAccepted { get; set; }
 
     [SerializeField] private TMP_InputField userNameTMP;
     [SerializeField] private TMP_InputField passwordTMP;
-    [SerializeField] private Image encryptImage;
+    [SerializeField] private Button encryptBtn;
+    [SerializeField] private Button usePwBtn;
+    private Image _encryptImage;
+    private Image _usePasswordImage;
+    
+    
     
     Color redC = Color.red;
     Color greenC = Color.green;
@@ -33,7 +38,15 @@ public class UserInfo : MonoBehaviour
     {
         instance = this;
         Encrypt = false;
-        encryptImage.color = redC;
+        UsePassword = true;
+        _encryptImage = encryptBtn.image;
+        _usePasswordImage = usePwBtn.image;
+        
+        _encryptImage.color = redC;
+        _usePasswordImage.color = redC;
+        
+        encryptBtn.onClick.AddListener(() => { ChangeEncryptState();});
+        usePwBtn.onClick.AddListener(() => { ChangeUsePasswordState();});
     }
     
     
@@ -41,7 +54,8 @@ public class UserInfo : MonoBehaviour
     {
         instance = this;
         Encrypt = false;
-        encryptImage.color = redC;
+        
+        
     }
 
 
@@ -66,9 +80,15 @@ public class UserInfo : MonoBehaviour
     {
         Encrypt = !Encrypt;
         encrypt = Encrypt;
-        encryptImage.color = Encrypt ? greenC : redC;
+        _encryptImage.color = Encrypt ? greenC : redC;
     }
-    
+
+    public void ChangeUsePasswordState()
+    {
+        UsePassword = !UsePassword;
+        usePassword = UsePassword;
+        _usePasswordImage.color = UsePassword ? greenC : redC;
+    }
     
     
     public void SetUserInfo() {

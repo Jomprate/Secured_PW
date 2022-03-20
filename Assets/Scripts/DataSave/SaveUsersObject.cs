@@ -42,14 +42,16 @@ public class UserData
     public bool userEncrypt;
     public string userName;
     public string userPassword;
+    public bool userUsePassword;
     
-    public UserData(int userId,string userAccessPath,bool userEncrypt,string userName,string userPassword)
+    public UserData(int userId,string userAccessPath,bool userEncrypt,string userName,string userPassword,bool userUsePassword)
     {
         this.userId = userId;
         this.userAccessPath = userAccessPath;
         this.userEncrypt = userEncrypt;
         this.userName = userName;
         this.userPassword = userPassword;
+        this.userUsePassword = userUsePassword;
     }
     
 }

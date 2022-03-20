@@ -154,6 +154,7 @@ public class GameManager : MonoBehaviour
         passwordContController.RemoveCont();
         SetCanvasState.SetState(true,WelcomeCanvas);
         createNewUserController.UpdateUsers();
+        /*createNewUserController.ResetUserConsole();*/
         CreateNewUser.gameObject.GetComponent<TabInputField>().EnableScript(false);
         //WelcomeCanvas.gameObject.GetComponent<TabInputField>().EnableScript(true);
         

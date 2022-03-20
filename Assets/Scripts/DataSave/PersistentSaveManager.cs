@@ -28,7 +28,7 @@ public class PersistentSaveManager : MonoBehaviour
       _encryptedPath = _createDirectory.EncryptedPath;
       Needed();
    }
-   
+
    private void Needed() {
       saveUsersObject = new SaveUsersObject
       {
@@ -81,7 +81,9 @@ public class PersistentSaveManager : MonoBehaviour
          userInfo.userAccessPath,
          userInfo.userEncrypt = userInfo.Encrypt,
          userInfo.UserName,
-         userInfo.UserPassword
+         userInfo.UserPassword,
+         userInfo.UsePassword = userInfo.usePassword
+         
       );
       return data;
    }
@@ -112,9 +114,25 @@ public class PersistentSaveManager : MonoBehaviour
       Save();
    }
 
-   public void DeleteUser()
+
+   public bool GetPasswordNeeded(int id)
    {
+      UserData userData = saveUsersObject.userDataL.Find( x => x.userId == id);
       
+      return userData.userUsePassword;
+   }
+   
+   public string GetCurrentUserPassword(int id)
+   {
+      UserData userData = saveUsersObject.userDataL.Find( x => x.userId == id);
+      
+      return userData.userPassword;;
+   }
+   
+   public void DeleteUser(string path)
+   {  saveUsersObject.activeUsers.actUsers -= 1;
+      File.Delete(path);
+      Save();
    }
    
 }

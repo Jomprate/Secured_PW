@@ -12,7 +12,7 @@ public class CreateNewUserController : MonoBehaviour
     [SerializeField] private UserInfo userInfo;
     [SerializeField] private Button createUser_btn;
     [SerializeField] private Button return_Btn;
-
+    [SerializeField] private List<Transform> childrenInContentP;
     private SaveUsersObject _saveUsersObject;
 
     public static CreateNewUserController instance;
@@ -28,6 +28,7 @@ public class CreateNewUserController : MonoBehaviour
         });
         _saveUsersObject = PersistentSaveManager.Instance.saveUsersObject;
         createUser_btn.onClick.AddListener(() => { Create();});
+        
     }
     
 
@@ -36,43 +37,39 @@ public class CreateNewUserController : MonoBehaviour
         userInfo.CheckNewUserInfo();
         if (userInfo.UserAccepted)
         {
-            var DSM = DataSaveManager.instance;
-            var PSM = PersistentSaveManager.Instance;
-            DSM.SaveFileName = DSM.RestSaveFileName;
+            var dsm = DataSaveManager.instance;
+            var psm = PersistentSaveManager.Instance;
+            dsm.SaveFileName = dsm.RestSaveFileName;
             var go = Instantiate(userPrefab, contentP);
+            var udic = go.gameObject.GetComponent<UserDataInCont>();
             
             go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = userInfo.UserName;
             
-            userInfo.UserId = PSM.saveUsersObject.createdIds.ids[PSM.saveUsersObject.createdUsers.createdU];
-            go.gameObject.GetComponent<UserDataInCont>().SetId(userInfo.UserId);
+            userInfo.UserId = psm.saveUsersObject.createdIds.ids[psm.saveUsersObject.createdUsers.createdU];
             
-            go.gameObject.GetComponent<UserDataInCont>().SetEncryptedB(userInfo.Encrypt);
+            udic.SetId(userInfo.UserId); udic.SetEncryptedB(userInfo.Encrypt);
             userInfo.encrypt = userInfo.Encrypt;
             
-            //DSM.SaveFileName += userInfo.UserId;
-            DSM.SaveFileName += userInfo.UserId;
+            dsm.SaveFileName += userInfo.UserId;
             
-            
-            
-            
-            _createDirectory.CreateNotEn(DSM.FolderName,DSM.SaveFileName,DSM.FileExtension);
-            DSM._Path = _createDirectory.NormalPath;
-            userInfo.userAccessPath = DSM._Path;
-            go.gameObject.GetComponent<UserDataInCont>().SetPath(userInfo.userAccessPath);
+            _createDirectory.CreateNotEn(dsm.FolderName,dsm.SaveFileName,dsm.FileExtension);
+            dsm._Path = _createDirectory.NormalPath;
+            userInfo.userAccessPath = dsm._Path;
+            udic.SetPath(userInfo.userAccessPath);
             
             switch (userInfo.Encrypt)
             {
                 case true: 
-                    PSM.CreateNewUserWithEnData();
-                    DSM.CreatePersonalDataEn(DataSaveManager.instance.SaveFileName);
+                    psm.CreateNewUserWithEnData();
+                    dsm.CreatePersonalDataEn(DataSaveManager.instance.SaveFileName,userInfo.UserPassword);
                     break;
                 case false: 
-                    PSM.CreateNewUserWithoutEnData();
-                    DSM.CreatePersonalDataNotEn(DataSaveManager.instance.SaveFileName);
+                    psm.CreateNewUserWithoutEnData();
+                    dsm.CreatePersonalDataNotEn(DataSaveManager.instance.SaveFileName,userInfo.UserPassword);
                     break;
             }
-            PSM.Save();
-            DSM.Save();
+            psm.Save();
+            dsm.Save();
             
             GameManager.instance.ChangeGameStateE(Enums.AppStates.Welcome);
             
@@ -85,7 +82,10 @@ public class CreateNewUserController : MonoBehaviour
 
     public void UpdateUsers()
     {
-        ResetUserConsole();
+        foreach (Transform child in contentP)
+        {
+            Destroy(child.gameObject);
+        }
         var PSM = PersistentSaveManager.Instance;
         for (int i = 0; i < PSM.saveUsersObject.activeUsers.actUsers; i++)
         {
@@ -98,13 +98,26 @@ public class CreateNewUserController : MonoBehaviour
             UDC.encrypted = PSM.saveUsersObject.userDataL[i].userEncrypt;
 
         }
+        SetIndex();
     }
 
-    public void ResetUserConsole()
+    public void SetIndex()
     {
+        FillContentP();
+        for (int i = 0; i < childrenInContentP.Count; i++)
+        {
+            childrenInContentP[i].GetComponent<UserDataInCont>().m_IndexNumber = i;
+        }
+        
+    }
+    
+    
+    public void FillContentP()
+    {   
+        childrenInContentP.Clear();
         foreach (Transform child in contentP)
         {
-            Destroy(child.gameObject);
+            childrenInContentP.Add(child);
         }
     }
     

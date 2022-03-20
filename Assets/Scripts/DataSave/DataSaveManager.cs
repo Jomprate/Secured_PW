@@ -54,7 +54,7 @@ public class DataSaveManager : MonoBehaviour
         
         saveDataObject = new SaveDataObject
         {
-            PasswordDataL = new List<PasswordData>(),
+            PasswordDataL = new List<PasswordData>()
         };
         json = JsonUtility.ToJson(saveDataObject);
         enJson = AESHandler.AesEncryption(json);;
@@ -64,19 +64,12 @@ public class DataSaveManager : MonoBehaviour
         
     }
 
-    public void SetPathToWork(string path, bool encrypted)
-    {
+    public void SetPathToWork(string path, bool encrypted) {
         _Path = path;
-        np = _Path;
-        Debug.Log(np);
-        
         Encrypted = encrypted;
-        Debug.Log("Encrypted in SetPath" + Encrypted);
         
         Load();
-        GameManager.instance.ChangeGameStateE(Enums.AppStates.PasswordCont);
         PasswordContController.instance.FillCont();
-        
     }
     
     private void CreateSaveDataObject() {
@@ -86,7 +79,7 @@ public class DataSaveManager : MonoBehaviour
     }
     
 
-    public void CreatePersonalDataNotEn(string saveFileName)
+    public void CreatePersonalDataNotEn(string saveFileName,string pw)
     {
         _createDirectory.CreateNotEn(FolderName,saveFileName,FileExtension);
         _Path = _createDirectory.NormalPath;
@@ -95,7 +88,6 @@ public class DataSaveManager : MonoBehaviour
         {
             PasswordDataL = new List<PasswordData>(),
         };
-        
         json = JsonUtility.ToJson(saveDataObject);
         enJson = AESHandler.AesEncryption(json);
         Encrypted = false;
@@ -105,7 +97,7 @@ public class DataSaveManager : MonoBehaviour
         
     }
 
-    public void CreatePersonalDataEn(string saveFileName)
+    public void CreatePersonalDataEn(string saveFileName,string pw)
     {
         _createDirectory.CreateNotEn(FolderName,saveFileName,FileExtension);
         _Path = _createDirectory.NormalPath;
