@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class CheckUserPassword : MonoBehaviour
@@ -20,20 +21,41 @@ public class CheckUserPassword : MonoBehaviour
 
 
     private int _id;
+    private InputManager inputManager;
+    private InputAction _uiInputs;
 
     public void Initialize()
     {
         instance = this;
         _getInputFields = GetComponent<GetInputFields>();
         passwordInput = _getInputFields._tmpInputFields[0];
-        accessBtn.onClick.AddListener(() => { CheckPassword(); });
+        accessBtn.onClick.AddListener(() => { CheckInsertedPassword(); });
         returnBtn.onClick.AddListener(() => { GameManager.instance.ChangeGameStateE(Enums.AppStates.Welcome); });
+
         psm = PersistentSaveManager.Instance;
         gm = GameManager.instance;
+        
+        inputManager = InputManager.instance;
+        _uiInputs = inputManager.userInputs.UIInputs.EnterKey;
+        //inputManager.userInputs.UIInputs.EnterKey.performed += ctx => {CheckPassword(); };
     }
 
+    public void EnableScript(bool enable)
+    {
+        switch (enable)
+        {
+            case true: _uiInputs.performed +=  CheckPw; 
+                break;
+            case false: _uiInputs.performed -=  CheckPw; 
+                break;
+        }
+        
+    }
+    
+    
     public void SetInfoToWork(int userId) {
         _id = userId;
+        PersistentSaveManager.Instance.GetCurrentUserPosition(_id);
         CheckIfNeedPw();
     }
 
@@ -42,7 +64,7 @@ public class CheckUserPassword : MonoBehaviour
         if (!usingPw) { gm.ChangeGameStateE(Enums.AppStates.PasswordCont); }
     }
 
-    private void CheckPassword()
+    private void CheckInsertedPassword()
     {
         if (passwordInput.text.Trim() == psm.GetCurrentUserPassword(_id))
         {
@@ -51,10 +73,15 @@ public class CheckUserPassword : MonoBehaviour
         }
         else
         {
+            passwordInput.text = String.Empty;
             Debug.Log("Wrong Password");
         }
     }
-   
+
+    public void CheckPw(InputAction.CallbackContext context)
+    {
+        CheckInsertedPassword();
+    }
     
     
 }

@@ -72,10 +72,11 @@ public class DataSaveManager : MonoBehaviour
         PasswordContController.instance.FillCont();
     }
     
-    private void CreateSaveDataObject() {
+    private SaveDataObject CreateCleanSaveDataObject() {
         saveDataObject = new SaveDataObject {
             PasswordDataL = new List<PasswordData>(),
         };
+        return saveDataObject;
     }
     
 
@@ -83,37 +84,35 @@ public class DataSaveManager : MonoBehaviour
     {
         _createDirectory.CreateNotEn(FolderName,saveFileName,FileExtension);
         _Path = _createDirectory.NormalPath;
-        
-        saveDataObject = new SaveDataObject
-        {
-            PasswordDataL = new List<PasswordData>(),
-        };
+        saveDataObject = CreateCleanSaveDataObject();
         json = JsonUtility.ToJson(saveDataObject);
         enJson = AESHandler.AesEncryption(json);
         Encrypted = false;
         Save();
-       
-        //Load(); 
-        
     }
 
     public void CreatePersonalDataEn(string saveFileName,string pw)
     {
         _createDirectory.CreateNotEn(FolderName,saveFileName,FileExtension);
         _Path = _createDirectory.NormalPath;
-        
-        saveDataObject = new SaveDataObject
-        {
-            PasswordDataL = new List<PasswordData>(),
-        };
+        saveDataObject = CreateCleanSaveDataObject();
         json = JsonUtility.ToJson(saveDataObject);
         enJson = AESHandler.AesEncryption(json);;
         Encrypted = true;
         Save();
-       
-        //Load(); 
-        
     }
+
+    public void CreatePersonalData(string saveFileName, string pw, bool encrypted)
+    {
+        _createDirectory.CreateNotEn(FolderName,saveFileName,FileExtension);
+        _Path = _createDirectory.NormalPath;
+        saveDataObject = CreateCleanSaveDataObject();
+        json = JsonUtility.ToJson(saveDataObject);
+        enJson = AESHandler.AesEncryption(json);;
+        Encrypted = encrypted;
+        Save();
+    }
+    
 
     public void DeletePassword(int index)
     {
@@ -152,10 +151,8 @@ public class DataSaveManager : MonoBehaviour
             switch (Encrypted)
             {
                 case true:
-                    Debug.Log(saveEnString);
                     saveEnString = AESHandler.AesDecryption(saveEnString);
                     saveEnString = AESHandler.AesDecryption(saveEnString);
-                    Debug.Log(saveEnString);
                     loadedDataObject = JsonUtility.FromJson<SaveDataObject>(saveEnString);
                     saveDataObject.PasswordDataL = loadedDataObject.PasswordDataL;
                     Save();

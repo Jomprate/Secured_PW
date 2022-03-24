@@ -4,37 +4,44 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+[RequireComponent(typeof(CNU_FillUsersContent))]
+[RequireComponent(typeof(CNU_SetIndexForUsers))]
 public class CreateNewUserController : MonoBehaviour
 {
+    private CNU_FillUsersContent _cnuFillUsersContent;
+    private CNU_SetIndexForUsers _cnuSetIndexForUsers;
+    
+    
     [SerializeField] private GameObject userPrefab;
     [SerializeField] private Transform contentP;
     [SerializeField] private UserInfo userInfo;
     [SerializeField] private Button createUser_btn;
     [SerializeField] private Button return_Btn;
-    [SerializeField] private List<Transform> childrenInContentP;
-    private SaveUsersObject _saveUsersObject;
+    [HideInInspector] public List<Transform> childrenInContentP;
 
     public static CreateNewUserController instance;
     public CreateDirectory _createDirectory;
 
+    
+    
+    
     public void Initialize()
     {
-        instance = this;
-        return_Btn.onClick.AddListener(() =>
-        {
-            GameManager.instance.ChangeGameStateE(Enums.AppStates.Welcome);
-            //Debug.Log("return pRESSED");
-        });
-        _saveUsersObject = PersistentSaveManager.Instance.saveUsersObject;
-        createUser_btn.onClick.AddListener(() => { Create();});
         
+        
+        instance = this;
+        return_Btn.onClick.AddListener(() => { GameManager.instance.ChangeGameStateE(Enums.AppStates.Welcome);});
+        createUser_btn.onClick.AddListener(() => { Create();});
+
+        _cnuFillUsersContent = GetComponent<CNU_FillUsersContent>();
+        _cnuSetIndexForUsers = GetComponent<CNU_SetIndexForUsers>();
+
     }
     
 
     public void Create()
     {
-        userInfo.CheckNewUserInfo();
+        userInfo.CheckNewUserData();
         if (userInfo.UserAccepted)
         {
             var dsm = DataSaveManager.instance;
@@ -54,18 +61,18 @@ public class CreateNewUserController : MonoBehaviour
             
             _createDirectory.CreateNotEn(dsm.FolderName,dsm.SaveFileName,dsm.FileExtension);
             dsm._Path = _createDirectory.NormalPath;
-            userInfo.userAccessPath = dsm._Path;
-            udic.SetPath(userInfo.userAccessPath);
+            userInfo.UserAccessPath = dsm._Path;
+            udic.SetPath(userInfo.UserAccessPath);
             
             switch (userInfo.Encrypt)
             {
                 case true: 
-                    psm.CreateNewUserWithEnData();
-                    dsm.CreatePersonalDataEn(DataSaveManager.instance.SaveFileName,userInfo.UserPassword);
+                    psm.CreateNewUser(true);
+                    dsm.CreatePersonalData(dsm.SaveFileName,userInfo.UserPassword,true);
                     break;
                 case false: 
-                    psm.CreateNewUserWithoutEnData();
-                    dsm.CreatePersonalDataNotEn(DataSaveManager.instance.SaveFileName,userInfo.UserPassword);
+                    psm.CreateNewUser(false);
+                    dsm.CreatePersonalData(dsm.SaveFileName,userInfo.UserPassword,false);
                     break;
             }
             psm.Save();
@@ -101,24 +108,13 @@ public class CreateNewUserController : MonoBehaviour
         SetIndex();
     }
 
-    public void SetIndex()
+    private void SetIndex()
     {
-        FillContentP();
-        for (int i = 0; i < childrenInContentP.Count; i++)
-        {
-            childrenInContentP[i].GetComponent<UserDataInCont>().m_IndexNumber = i;
-        }
-        
+        _cnuFillUsersContent.FillContent(contentP,childrenInContentP);
+        _cnuSetIndexForUsers.SetIndex(childrenInContentP);
     }
     
     
-    public void FillContentP()
-    {   
-        childrenInContentP.Clear();
-        foreach (Transform child in contentP)
-        {
-            childrenInContentP.Add(child);
-        }
-    }
+    
     
 }

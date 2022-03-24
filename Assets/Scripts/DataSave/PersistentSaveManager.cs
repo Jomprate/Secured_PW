@@ -32,7 +32,7 @@ public class PersistentSaveManager : MonoBehaviour
    private void Needed() {
       saveUsersObject = new SaveUsersObject
       {
-         createdIds = new CreatedIds(CreateRandomId.GenerateRandom(100,1000,10000)),
+         createdIds = new CreatedIds(CreateRandomId.GenerateRandom(1000,1000,10000)),
          createdUsers = new CreatedUsers(),
          activeUsers = new ActiveUsers(),
          userDataL = new List<UserData>()
@@ -78,57 +78,60 @@ public class PersistentSaveManager : MonoBehaviour
       var userInfo = UserInfo.instance;
       UserData data = new UserData(
          userInfo.UserId = saveUsersObject.createdIds.ids[saveUsersObject.createdUsers.createdU],
-         userInfo.userAccessPath,
-         userInfo.userEncrypt = userInfo.Encrypt,
+         userInfo.UserAccessPath,
+         userInfo.UserEncrypt = userInfo.Encrypt,
          userInfo.UserName,
          userInfo.UserPassword,
          userInfo.UsePassword = userInfo.usePassword
          
       );
+      
+      
       return data;
    }
    
-   public void CreateNewUserWithoutEnData() {
+   public void CreateNewUser(bool encrypt)
+   {
       UserData data = CreateUserData();
       
       data.userAccessPath = DataSaveManager.instance._Path;
       saveUsersObject.createdUsers.createdU += 1;
       saveUsersObject.activeUsers.actUsers += 1;
       saveUsersObject.userDataL.Add(data);
-      
-      _createDirectory.CreateNotEn(FolderName,EnSaveFileName,FileExtension);
-      _encryptedPath = _createDirectory.EncryptedPath;
+
+      switch (encrypt)
+      {
+         case true:
+            _createDirectory.CreateEn(FolderName,EnSaveFileName,FileExtension);
+            _encryptedPath = _createDirectory.EncryptedPath;
+            break;
+         case false:
+            _createDirectory.CreateNotEn(FolderName,EnSaveFileName,FileExtension);
+            _encryptedPath = _createDirectory.EncryptedPath;
+            break;
+      }
+
       Save();
+   }
+
+   #region Get Info from an Specific User
+   
+   public int GetCurrentUserPosition(int id) {
+      var userData = saveUsersObject.userDataL.Find( x => x.userId == id);
+      return saveUsersObject.userDataL.IndexOf(userData);
    }
    
-   public void CreateNewUserWithEnData() {
-      UserData data = CreateUserData();
-      
-      data.userAccessPath = DataSaveManager.instance._Path;
-      saveUsersObject.createdUsers.createdU += 1;
-      saveUsersObject.activeUsers.actUsers += 1;
-      saveUsersObject.userDataL.Add(data);
-      
-      _createDirectory.CreateEn(FolderName,EnSaveFileName,FileExtension);
-      _encryptedPath = _createDirectory.EncryptedPath;
-      Save();
-   }
-
-
-   public bool GetPasswordNeeded(int id)
-   {
-      UserData userData = saveUsersObject.userDataL.Find( x => x.userId == id);
-      
+   public bool GetPasswordNeeded(int id) {
+      var userData = saveUsersObject.userDataL.Find( x => x.userId == id);
       return userData.userUsePassword;
    }
    
-   public string GetCurrentUserPassword(int id)
-   {
-      UserData userData = saveUsersObject.userDataL.Find( x => x.userId == id);
-      
+   public string GetCurrentUserPassword(int id) {
+      var userData = saveUsersObject.userDataL.Find( x => x.userId == id);
       return userData.userPassword;;
    }
    
+   #endregion
    public void DeleteUser(string path)
    {  saveUsersObject.activeUsers.actUsers -= 1;
       File.Delete(path);

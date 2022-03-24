@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// ReSharper disable once CheckNamespace
 public static class SetCanvasState
 {
     public static void SetState(bool state, CanvasGroup canvasGroup)

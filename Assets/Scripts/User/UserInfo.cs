@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-
+[RequireComponent(typeof(UICheckTextLenght))]
 public class UserInfo : MonoBehaviour
 {
     public static UserInfo instance;
+    private UICheckTextLenght _uiCtLenght;
     
     public int UserId { get; set; }
-    
-    public string userAccessPath { get; set; }
-    public bool userEncrypt { get; set; }
+    public string UserAccessPath { get; set; }
+    public bool UserEncrypt { get; set; }
     public string UserName { get; set; }
-    public string UserPassword { get; set; }
+    public string UserPassword { get; set ; }
     public bool Encrypt { get; set; }
     public bool encrypt;
     public bool UsePassword { get; set; }
@@ -37,68 +37,86 @@ public class UserInfo : MonoBehaviour
     public void Initialize()
     {
         instance = this;
-        Encrypt = false;
-        UsePassword = true;
+
+        _uiCtLenght = GetComponent<UICheckTextLenght>();
+        
         _encryptImage = encryptBtn.image;
         _usePasswordImage = usePwBtn.image;
         
         _encryptImage.color = redC;
         _usePasswordImage.color = redC;
+
+        Encrypt = false;
+        encrypt = false;
+        UsePassword = false;
+        usePassword = false;
+        passwordTMP.interactable = false;
+        
         
         encryptBtn.onClick.AddListener(() => { ChangeEncryptState();});
         usePwBtn.onClick.AddListener(() => { ChangeUsePasswordState();});
     }
-    
-    
-    private void Awake()
-    {
-        instance = this;
-        Encrypt = false;
-        
-        
-    }
 
 
-    public void CheckNewUserInfo() {
-        if (userNameTMP.text.Trim().Length > 3 && passwordTMP.text.Trim().Length > 3)
+    public void CheckNewUserData() {
+        switch (UsePassword)
         {
-            UserAccepted = true;
-            SetUserInfo();
+            case true:
+                if (_uiCtLenght.CheckTextL(userNameTMP,3) && _uiCtLenght.CheckTextL(passwordTMP,3)){
+                    UserAccepted = true;
+                    SetUserInfo();
+                }
+                else
+                {
+                    UserAccepted = false;
+                    Debug.Log("to short");
+                    //show something
+                }
+                break;
+                
+            case false:
+                if (_uiCtLenght.CheckTextL(userNameTMP,3)){
+                    UserAccepted = true;
+                    SetUserInfo();
+                }
+                else
+                {
+                    UserAccepted = false;
+                    Debug.Log("to short");
+                    //show something
+                }
+                break;
         }
-        else
-        {
-            UserAccepted = false;
-            Debug.Log("to short");
-            //show something
-        }
-        
-        /*SetUserInfo();*/
-        
     }
-
+    
+    public void ActiveOrUnActivePw() {
+        passwordTMP.interactable = usePassword;
+        if (passwordTMP.interactable == false)
+        {
+            passwordTMP.text = String.Empty;
+        }
+    }
+    
     public void ChangeEncryptState()
     {
         Encrypt = !Encrypt;
         encrypt = Encrypt;
+        
         _encryptImage.color = Encrypt ? greenC : redC;
     }
-
+    
     public void ChangeUsePasswordState()
     {
         UsePassword = !UsePassword;
         usePassword = UsePassword;
+        //ActiveOrUnActivePw();
         _usePasswordImage.color = UsePassword ? greenC : redC;
+        ActiveOrUnActivePw();
     }
     
-    
     public void SetUserInfo() {
-        //UserId = 
         UserName = userNameTMP.text;
         UserPassword = passwordTMP.text;
-        
-        //PersistentSaveManager.instance.CreateNewUserWithoutEnData();
-        //DataSaveManager.instance.CreateNewUser();
-        //DataSaveManager.instance.SaveUsers();
     }
     
 }

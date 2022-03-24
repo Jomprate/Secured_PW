@@ -34,8 +34,15 @@ public class UserDataInCont : MonoBehaviour
         //GameManager.instance.ChangeGameStateE(Enums.AppStates.PasswordCont);
     }
 
+    public int GetPositionInList()
+    {
+        return PersistentSaveManager.Instance.GetCurrentUserPosition(id);
+    }
+    
     public void DeleteUser()
     {
+        PersistentSaveManager.Instance.saveUsersObject.userDataL.RemoveAt(GetPositionInList());
+        PersistentSaveManager.Instance.Save();
         Destroy(gameObject);
     }
     

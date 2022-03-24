@@ -35,6 +35,15 @@ public partial class @UserInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""EnterKey"",
+                    ""type"": ""Button"",
+                    ""id"": ""70605158-215e-4282-8ffa-20a32098da53"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -46,6 +55,17 @@ public partial class @UserInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""PC"",
                     ""action"": ""TabInputChange"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""71415424-f78a-4d38-875c-94d0c7bb80e6"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""EnterKey"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -69,6 +89,7 @@ public partial class @UserInputs : IInputActionCollection2, IDisposable
         // UIInputs
         m_UIInputs = asset.FindActionMap("UIInputs", throwIfNotFound: true);
         m_UIInputs_TabInputChange = m_UIInputs.FindAction("TabInputChange", throwIfNotFound: true);
+        m_UIInputs_EnterKey = m_UIInputs.FindAction("EnterKey", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -129,11 +150,13 @@ public partial class @UserInputs : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_UIInputs;
     private IUIInputsActions m_UIInputsActionsCallbackInterface;
     private readonly InputAction m_UIInputs_TabInputChange;
+    private readonly InputAction m_UIInputs_EnterKey;
     public struct UIInputsActions
     {
         private @UserInputs m_Wrapper;
         public UIInputsActions(@UserInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @TabInputChange => m_Wrapper.m_UIInputs_TabInputChange;
+        public InputAction @EnterKey => m_Wrapper.m_UIInputs_EnterKey;
         public InputActionMap Get() { return m_Wrapper.m_UIInputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -146,6 +169,9 @@ public partial class @UserInputs : IInputActionCollection2, IDisposable
                 @TabInputChange.started -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnTabInputChange;
                 @TabInputChange.performed -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnTabInputChange;
                 @TabInputChange.canceled -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnTabInputChange;
+                @EnterKey.started -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnEnterKey;
+                @EnterKey.performed -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnEnterKey;
+                @EnterKey.canceled -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnEnterKey;
             }
             m_Wrapper.m_UIInputsActionsCallbackInterface = instance;
             if (instance != null)
@@ -153,6 +179,9 @@ public partial class @UserInputs : IInputActionCollection2, IDisposable
                 @TabInputChange.started += instance.OnTabInputChange;
                 @TabInputChange.performed += instance.OnTabInputChange;
                 @TabInputChange.canceled += instance.OnTabInputChange;
+                @EnterKey.started += instance.OnEnterKey;
+                @EnterKey.performed += instance.OnEnterKey;
+                @EnterKey.canceled += instance.OnEnterKey;
             }
         }
     }
@@ -169,5 +198,6 @@ public partial class @UserInputs : IInputActionCollection2, IDisposable
     public interface IUIInputsActions
     {
         void OnTabInputChange(InputAction.CallbackContext context);
+        void OnEnterKey(InputAction.CallbackContext context);
     }
 }

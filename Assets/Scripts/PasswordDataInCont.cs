@@ -27,6 +27,7 @@ public class PasswordDataInCont : MonoBehaviour
 
     public void DeleteThis()
     {
+        
         Destroy(gameObject);
         
     }
