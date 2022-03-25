@@ -1,21 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using System;
+﻿using System;
 using System.Text;
 using System.Security.Cryptography;
 
 
 public static class AESHandler
 {
-    
-    
-    
-    
-    
-
-    
     //AES - Encription 
     public static string AesEncryption(string inputData)
     {

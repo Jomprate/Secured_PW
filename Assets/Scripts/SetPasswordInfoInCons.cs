@@ -21,7 +21,7 @@ public class SetPasswordInfoInCons : MonoBehaviour
 
     private void OnEnable() {
         if (_getInputFields == null) { _getInputFields = GetComponent<GetInputFields>(); }
-        _tmpInputFields = _getInputFields._tmpInputFields;
+        _tmpInputFields = _getInputFields.tmpInputFields;
     }
 
    

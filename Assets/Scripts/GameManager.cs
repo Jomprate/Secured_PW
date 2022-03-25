@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PasswordContController passwordContController;
     [SerializeField] private CheckUserPassword _checkUserPassword;
     [SerializeField] private CreateNewPassword _createNewPassword;
+    [SerializeField] private AdviceDeletePassword _adviceDeletePassword;
     
     
     
@@ -41,6 +42,8 @@ public class GameManager : MonoBehaviour
 
     public CanvasGroup CreateNewPw { get; set; }
     public CanvasGroup createNewPw;
+    
+    public CanvasGroup AdviceC { get; set; }
 
     private void Awake()
     {
@@ -75,6 +78,7 @@ public class GameManager : MonoBehaviour
         passwordContainer = PasswordContainer;
         CreateNewPw = _getAllPanels.CanvasV[4].CanvasGroupP;
         createNewPw = CreateNewPw;
+        AdviceC = _getAllPanels.CanvasV[5].CanvasGroupP;
 
         TurnOffAllPanels();
     }
@@ -87,6 +91,7 @@ public class GameManager : MonoBehaviour
             if (canvasV.gameObject.GetComponent<TabInputField>() != null)
             {
                 canvasV.gameObject.GetComponent<TabInputField>().EnableScript(false);
+                
             }
             
         }
@@ -115,6 +120,7 @@ public class GameManager : MonoBehaviour
                 _checkUserPassword.Initialize();
                 passwordContController.Initialize();
                 _createNewPassword.Initialize();
+                _adviceDeletePassword.Initialize();
                 
                 
                 
@@ -122,7 +128,7 @@ public class GameManager : MonoBehaviour
                 break;
             case Enums.AppStates.Welcome:
                 WelcomeCanvasSec();
-                PasswordContController.instance.FillCont();
+                PasswordContController.Instance.FillCont();
                 break;
             case Enums.AppStates.MainMenu:
                 break;
@@ -138,11 +144,14 @@ public class GameManager : MonoBehaviour
             case Enums.AppStates.CreateNewPw:
                 CreateNewPwSec();
                 break;
+            case Enums.AppStates.AdvicePw:
+                AdviceSec();
+                break;
             case Enums.AppStates.StartGame:
                 break;
 
 
-           
+            
             default:
                 throw new ArgumentOutOfRangeException(nameof(gameState), gameState, null);
         }
@@ -154,8 +163,10 @@ public class GameManager : MonoBehaviour
         passwordContController.RemoveCont();
         SetCanvasState.SetState(true,WelcomeCanvas);
         createNewUserController.UpdateUsers();
+        
         /*createNewUserController.ResetUserConsole();*/
         CreateNewUser.gameObject.GetComponent<TabInputField>().EnableScript(false);
+        CreateNewUser.gameObject.GetComponent<CreateNewUserController>().EnableScript(false);
         _checkUserPassword.EnableScript(false);
         //WelcomeCanvas.gameObject.GetComponent<TabInputField>().EnableScript(true);
         
@@ -165,7 +176,9 @@ public class GameManager : MonoBehaviour
     {
         TurnOffAllPanels();
         SetCanvasState.SetState(true,CreateNewUser);
+        _userInfo.ResetConsole();
         CreateNewUser.gameObject.GetComponent<TabInputField>().EnableScript(true);
+        CreateNewUser.gameObject.GetComponent<CreateNewUserController>().EnableScript(true);
         _checkUserPassword.EnableScript(false);
     }
 
@@ -174,6 +187,7 @@ public class GameManager : MonoBehaviour
         TurnOffAllPanels();
         SetCanvasState.SetState(true,CheckUserP);
         CreateNewUser.gameObject.GetComponent<TabInputField>().EnableScript(false);
+        CreateNewUser.gameObject.GetComponent<CreateNewUserController>().EnableScript(false);
         _checkUserPassword.EnableScript(true);
     }
 
@@ -182,6 +196,7 @@ public class GameManager : MonoBehaviour
         TurnOffAllPanels();
         SetCanvasState.SetState(true,PasswordContainer);
         CreateNewUser.gameObject.GetComponent<TabInputField>().EnableScript(false);
+        CreateNewUser.gameObject.GetComponent<CreateNewUserController>().EnableScript(false);
         createNewPw.gameObject.GetComponent<TabInputField>().EnableScript(false);
         _checkUserPassword.EnableScript(false);
     }
@@ -191,8 +206,20 @@ public class GameManager : MonoBehaviour
         TurnOffAllPanels();
         SetCanvasState.SetState(true,CreateNewPw);
         CreateNewUser.gameObject.GetComponent<TabInputField>().EnableScript(false);
+        CreateNewUser.gameObject.GetComponent<CreateNewUserController>().EnableScript(false);
         createNewPw.gameObject.GetComponent<TabInputField>().EnableScript(true);
         _checkUserPassword.EnableScript(false);
     }
+    
+    public void AdviceSec()
+    {
+        TurnOffAllPanels();
+        SetCanvasState.SetState(true,AdviceC);
+        CreateNewUser.gameObject.GetComponent<TabInputField>().EnableScript(false);
+        CreateNewUser.gameObject.GetComponent<CreateNewUserController>().EnableScript(false);
+        createNewPw.gameObject.GetComponent<TabInputField>().EnableScript(true);
+        _checkUserPassword.EnableScript(false);
+    }
+    
     
 }

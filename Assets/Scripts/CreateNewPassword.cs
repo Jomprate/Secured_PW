@@ -27,15 +27,11 @@ public class CreateNewPassword : MonoBehaviour
         
         if (_getInputFields == null) { _getInputFields = GetComponent<GetInputFields>(); }
         
-        _tmpInputFields = _getInputFields._tmpInputFields;
+        _tmpInputFields = _getInputFields.tmpInputFields;
         
         CreateNewPw_Btn.onClick.AddListener(() => { CreateNewPw(); });
     }
-    
-    private void OnEnable()
-    {
-        
-    }
+   
 
     private void CreateNewPw() {
         var dsm = DataSaveManager.instance;

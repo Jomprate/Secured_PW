@@ -4,8 +4,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 public class UserDataInCont : MonoBehaviour
 {
+    
     [SerializeField] private TextMeshProUGUI idTMP;
     private Button thisBtn;
     [SerializeField] private Button deleteUserBtn;
@@ -24,46 +27,21 @@ public class UserDataInCont : MonoBehaviour
         
     }
 
-    public void ImPressed()
-    {
+    public void ImPressed() {
         SetPasswordInfoInCons.instance.ResetPasswordInfo();
         DataSaveManager.instance.SetPathToWork(path,encrypted);
         GameManager.instance.ChangeGameStateE(Enums.AppStates.CheckUser);
         CheckUserPassword.instance.SetInfoToWork(id);
-        //CheckUserPassword.instance.CheckUser();
-        //GameManager.instance.ChangeGameStateE(Enums.AppStates.PasswordCont);
     }
 
-    public int GetPositionInList()
-    {
-        return PersistentSaveManager.Instance.GetCurrentUserPosition(id);
-    }
-    
-    public void DeleteUser()
-    {
-        PersistentSaveManager.Instance.saveUsersObject.userDataL.RemoveAt(GetPositionInList());
-        PersistentSaveManager.Instance.Save();
-        Destroy(gameObject);
-    }
-    
-    public void SetPath(string path)
-    {
-        this.path = path;
-    }
+    private void DeleteUser() => UDIC_DeleteUser.DeleteU(id,gameObject);
+    public void SetPath(string p) => path = p;
+    public void SetEncryptedB(bool encrypt) => encrypted = encrypt;
 
-    public void SetEncryptedB(bool encrypt)
-    {
-        encrypted = encrypt;
-        //Debug.Log( "set encryptedB"+encrypted);
-    }
-    
     public void SetPasswordData(string id)
     {
         idTMP.text = id;
     }
 
-    public void SetId(int id)
-    {
-        this.id = id;
-    }
+    public void SetId(int i) => id = i;
 }

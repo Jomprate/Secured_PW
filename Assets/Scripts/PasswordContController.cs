@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class PasswordContController : MonoBehaviour
 {
-    public static PasswordContController instance;
+    public static PasswordContController Instance;
     [SerializeField] private Transform contentTr;
     [SerializeField] private GameObject passwordPrefab;
     [SerializeField] private List<GameObject> passwordsObjs;
 
     public void Initialize()
     {
-        instance = this;
+        Instance = this;
     }
     
     public void AddNewPassword(string id)

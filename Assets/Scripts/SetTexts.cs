@@ -16,11 +16,11 @@ public class SetTexts : MonoBehaviour
 
     public void SetKeyInputText()
     {
-        _getInputFields._tmpInputFields[0].text = stringBuilder.CreateNewCharString();
+        _getInputFields.tmpInputFields[0].text = stringBuilder.CreateNewCharString();
     }
 
     public void SetIvInputText()
     {
-        _getInputFields._tmpInputFields[1].text = stringBuilder.CreateNewIntString();
+        _getInputFields.tmpInputFields[1].text = stringBuilder.CreateNewIntString();
     }
 }

@@ -6,10 +6,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(BlinkRed))]
 public class CheckUserPassword : MonoBehaviour
 {
     public static CheckUserPassword instance;
-    
+
+    private BlinkRed _blinkRed;
     private GetInputFields _getInputFields;
 
     private PersistentSaveManager psm;
@@ -27,8 +29,9 @@ public class CheckUserPassword : MonoBehaviour
     public void Initialize()
     {
         instance = this;
+        _blinkRed = GetComponent<BlinkRed>();
         _getInputFields = GetComponent<GetInputFields>();
-        passwordInput = _getInputFields._tmpInputFields[0];
+        passwordInput = _getInputFields.tmpInputFields[0];
         accessBtn.onClick.AddListener(() => { CheckInsertedPassword(); });
         returnBtn.onClick.AddListener(() => { GameManager.instance.ChangeGameStateE(Enums.AppStates.Welcome); });
 
@@ -37,7 +40,6 @@ public class CheckUserPassword : MonoBehaviour
         
         inputManager = InputManager.instance;
         _uiInputs = inputManager.userInputs.UIInputs.EnterKey;
-        //inputManager.userInputs.UIInputs.EnterKey.performed += ctx => {CheckPassword(); };
     }
 
     public void EnableScript(bool enable)
@@ -73,6 +75,7 @@ public class CheckUserPassword : MonoBehaviour
         }
         else
         {
+            _blinkRed.BlinkT(passwordInput);
             passwordInput.text = String.Empty;
             Debug.Log("Wrong Password");
         }

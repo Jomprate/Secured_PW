@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-[RequireComponent(typeof(UICheckTextLenght))]
+[RequireComponent(typeof(BlinkRed))]
 public class UserInfo : MonoBehaviour
 {
     public static UserInfo instance;
-    private UICheckTextLenght _uiCtLenght;
+    private BlinkRed _blinkRed;
     
     public int UserId { get; set; }
     public string UserAccessPath { get; set; }
@@ -37,32 +37,33 @@ public class UserInfo : MonoBehaviour
     public void Initialize()
     {
         instance = this;
-
-        _uiCtLenght = GetComponent<UICheckTextLenght>();
+        _blinkRed = GetComponent<BlinkRed>();
         
         _encryptImage = encryptBtn.image;
         _usePasswordImage = usePwBtn.image;
         
-        _encryptImage.color = redC;
+        ResetConsole();
+        /*_encryptImage.color = redC;
         _usePasswordImage.color = redC;
 
         Encrypt = false;
         encrypt = false;
         UsePassword = false;
         usePassword = false;
-        passwordTMP.interactable = false;
+        passwordTMP.interactable = false;*/
         
         
         encryptBtn.onClick.AddListener(() => { ChangeEncryptState();});
         usePwBtn.onClick.AddListener(() => { ChangeUsePasswordState();});
     }
+    
 
 
     public void CheckNewUserData() {
         switch (UsePassword)
         {
             case true:
-                if (_uiCtLenght.CheckTextL(userNameTMP,3) && _uiCtLenght.CheckTextL(passwordTMP,3)){
+                if (UsIn_CheckTextLenght.CheckTextL(userNameTMP,3,_blinkRed) && UsIn_CheckTextLenght.CheckTextL(passwordTMP,3,_blinkRed)){
                     UserAccepted = true;
                     SetUserInfo();
                 }
@@ -75,7 +76,7 @@ public class UserInfo : MonoBehaviour
                 break;
                 
             case false:
-                if (_uiCtLenght.CheckTextL(userNameTMP,3)){
+                if (UsIn_CheckTextLenght.CheckTextL(userNameTMP,3,_blinkRed)){
                     UserAccepted = true;
                     SetUserInfo();
                 }
@@ -109,7 +110,6 @@ public class UserInfo : MonoBehaviour
     {
         UsePassword = !UsePassword;
         usePassword = UsePassword;
-        //ActiveOrUnActivePw();
         _usePasswordImage.color = UsePassword ? greenC : redC;
         ActiveOrUnActivePw();
     }
@@ -117,6 +117,26 @@ public class UserInfo : MonoBehaviour
     public void SetUserInfo() {
         UserName = userNameTMP.text;
         UserPassword = passwordTMP.text;
+    }
+    
+    public void ResetConsole()
+    {
+        UserId = 0;
+        UserAccessPath = null;
+        UserEncrypt = false;
+        UserName = string.Empty;
+        UserPassword = string.Empty;
+        Encrypt = false;
+        encrypt = false;
+        UsePassword = false;
+        usePassword = false;
+        passwordTMP.interactable = false;
+
+        userNameTMP.text = string.Empty;
+        passwordTMP.text = string.Empty;
+        
+        _encryptImage.color = redC;
+        _usePasswordImage.color = redC;
     }
     
 }

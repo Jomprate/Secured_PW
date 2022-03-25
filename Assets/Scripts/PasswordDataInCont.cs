@@ -20,7 +20,8 @@ public class PasswordDataInCont : MonoBehaviour
        
         thisBtn = GetComponent<Button>();
         thisBtn.onClick.AddListener(() => { SetPasswordInfoInCons.instance.SetPasswordInfo(m_IndexNumber); });
-        deleteThisPW.onClick.AddListener(() => { DataSaveManager.instance.DeletePassword(m_IndexNumber); DeleteThis(); });
+        //deleteThisPW.onClick.AddListener(() => { DataSaveManager.instance.DeletePassword(m_IndexNumber); DeleteThis(); });
+        deleteThisPW.onClick.AddListener(() => { GameManager.instance.ChangeGameStateE(Enums.AppStates.AdvicePw); AdviceDeletePassword.Instance.SetPasswordInfo(m_IndexNumber,gameObject); });
     }
 
     

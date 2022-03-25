@@ -14,6 +14,7 @@ public static class Enums
         CheckUser,
         PasswordCont,
         CreateNewPw,
+        AdvicePw,
         StartGame
     }
     
@@ -21,12 +22,12 @@ public static class Enums
     {
         WelcomeCanvas,
         CreateNewUser,
-        SelectEnKeys,
         CheckUserPassword,
         PasswordContainer,
         CreateNewPassword,
-        
-        
+        AdvicePasswordD,
+
+
     }
     
     public enum InputFieldType

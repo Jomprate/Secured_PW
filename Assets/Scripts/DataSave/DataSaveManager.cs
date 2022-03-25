@@ -69,7 +69,7 @@ public class DataSaveManager : MonoBehaviour
         Encrypted = encrypted;
         
         Load();
-        PasswordContController.instance.FillCont();
+        PasswordContController.Instance.FillCont();
     }
     
     private SaveDataObject CreateCleanSaveDataObject() {
@@ -118,7 +118,7 @@ public class DataSaveManager : MonoBehaviour
     {
         saveDataObject.PasswordDataL.RemoveAt(index);
         Save();
-        PasswordContController.instance.FillCont();
+        PasswordContController.Instance.FillCont();
         
     }
 
@@ -195,7 +195,7 @@ public class DataSaveManager : MonoBehaviour
         
         saveDataObject.PasswordDataL.Add(data);
         Save();
-        PasswordContController.instance.AddNewPassword(data.passwordId);
+        PasswordContController.Instance.AddNewPassword(data.passwordId);
 
     }
     
