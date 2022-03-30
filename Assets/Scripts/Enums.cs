@@ -15,6 +15,10 @@ public static class Enums
         PasswordCont,
         CreateNewPw,
         AdvicePw,
+        AdviceUserNoPw,
+        AdviceUserWithPw,
+        AdviceCheckPw,
+        AdviceVerifyAccess,
         StartGame
     }
     
@@ -28,6 +32,15 @@ public static class Enums
         AdvicePasswordD,
 
 
+    }
+
+    public enum AdviceType
+    {
+        Password,
+        UserNoPw,
+        UserWithPw,
+        CheckPw,
+        VerifyAccess
     }
     
     public enum InputFieldType

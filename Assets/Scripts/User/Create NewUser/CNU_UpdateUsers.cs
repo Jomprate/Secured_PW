@@ -19,6 +19,7 @@ public class CNU_UpdateUsers : MonoBehaviour
             UDC.id = PSM.saveUsersObject.userDataL[i].userId;
             UDC.path = PSM.saveUsersObject.userDataL[i].userAccessPath;
             UDC.encrypted = PSM.saveUsersObject.userDataL[i].userEncrypt;
+            UDC.usingPw = PSM.saveUsersObject.userDataL[i].userUsePassword;
 
         }
     }

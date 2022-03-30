@@ -8,6 +8,7 @@ public class UDIC_DeleteUser : MonoBehaviour
     {
         var psm = PersistentSaveManager.Instance;
         psm.saveUsersObject.userDataL.RemoveAt(psm.GetCurrentUserPosition(id));
+        
         psm.Save();
         Destroy(goToDelete);
         

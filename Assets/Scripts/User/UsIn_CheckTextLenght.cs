@@ -15,6 +15,5 @@ public class UsIn_CheckTextLenght : MonoBehaviour
             br.BlinkT(inputText);
             return false;
         }
-        return inputText.text.Trim().Length > longRequired;
     }
 }

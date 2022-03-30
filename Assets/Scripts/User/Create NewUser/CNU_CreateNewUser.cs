@@ -17,6 +17,9 @@ public class CNU_CreateNewUser : MonoBehaviour
             
         udic.SetId(usI.UserId); udic.SetEncryptedB(usI.Encrypt);
         usI.encrypt = usI.Encrypt;
+        udic.SetUsingPw(usI.UsePassword);
+        usI.usePassword = usI.UsePassword;
+        
             
         dsm.SaveFileName += usI.UserId;
             

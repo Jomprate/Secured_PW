@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class CreateNewPassword : MonoBehaviour
@@ -10,6 +11,7 @@ public class CreateNewPassword : MonoBehaviour
     public static CreateNewPassword instance;
 
     [SerializeField] private Button CreateNewPw_Btn;
+    [SerializeField] private Button Return_Btn;
     
     public string PasswordId { get; set; }
     public string Email { get; set; }
@@ -20,6 +22,9 @@ public class CreateNewPassword : MonoBehaviour
 
     private GetInputFields _getInputFields;
     public List<TMP_InputField> _tmpInputFields;
+    
+    private InputManager inputManager;
+    private InputAction _uiInputs;
 
     public void Initialize()
     {
@@ -30,6 +35,10 @@ public class CreateNewPassword : MonoBehaviour
         _tmpInputFields = _getInputFields.tmpInputFields;
         
         CreateNewPw_Btn.onClick.AddListener(() => { CreateNewPw(); });
+        Return_Btn.onClick.AddListener(() => { ReturnV(); });
+        
+        inputManager = InputManager.instance;
+        _uiInputs = inputManager.userInputs.UIInputs.EnterKey;
     }
    
 
@@ -59,6 +68,11 @@ public class CreateNewPassword : MonoBehaviour
         {
             inputField.text = null;
         }
+    }
+
+    public void ReturnV()
+    {
+        GameManager.instance.ChangeGameStateE(Enums.AppStates.PasswordCont);
     }
     
 }

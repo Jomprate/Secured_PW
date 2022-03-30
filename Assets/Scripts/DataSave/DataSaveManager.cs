@@ -37,8 +37,8 @@ public class DataSaveManager : MonoBehaviour
     {
         instance = this;
         _createDirectory = GetComponent<CreateDirectory>();
-        SaveFileName = "save";
-        RestSaveFileName = "save";
+        SaveFileName = "User";
+        RestSaveFileName = "User";
         FolderName = "SD";
         FileExtension = ".SS";
         

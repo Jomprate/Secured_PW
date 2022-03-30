@@ -32,7 +32,7 @@ public class PersistentSaveManager : MonoBehaviour
    private void Needed() {
       saveUsersObject = new SaveUsersObject
       {
-         createdIds = new CreatedIds(CreateRandomId.GenerateRandom(1000,1000,10000)),
+         createdIds = new CreatedIds(CreateRandomId.GenerateRandom(10000,100000,1000000)),
          createdUsers = new CreatedUsers(),
          activeUsers = new ActiveUsers(),
          userDataL = new List<UserData>()
@@ -77,6 +77,7 @@ public class PersistentSaveManager : MonoBehaviour
    private UserData CreateUserData() {
       var userInfo = UserInfo.instance;
       UserData data = new UserData(
+         
          userInfo.UserId = saveUsersObject.createdIds.ids[saveUsersObject.createdUsers.createdU],
          userInfo.UserAccessPath,
          userInfo.UserEncrypt = userInfo.Encrypt,
@@ -132,7 +133,12 @@ public class PersistentSaveManager : MonoBehaviour
    }
    
    #endregion
-   public void DeleteUser(string path)
+   public void DeleteUserNoPw(string path)
+   {  saveUsersObject.activeUsers.actUsers -= 1;
+      File.Delete(path);
+      Save();
+   }
+   public void DeleteUserPw(string path)
    {  saveUsersObject.activeUsers.actUsers -= 1;
       File.Delete(path);
       Save();
