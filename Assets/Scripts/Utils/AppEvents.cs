@@ -11,11 +11,6 @@ public class AppEvents : MonoBehaviour
     {
         Instance = this;
         
-        /*ChangeGameStateE();
-        ChangePlayerMovementUpdate();
-        ChangeCylinderColor();*/
-        
-        
     }
 
     public event Action<Enums.AppStates> OnAppStateChange;

@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class Advice_DeletePassword : AdvicesAbs
 {
     public static Advice_DeletePassword Instance;
-    private int mIndexNumber;
-    private GameObject goToDelete;
+    private int _mIndexNumber;
+    private GameObject _goToDelete;
 
     public override void Awake()
     {
@@ -22,12 +22,12 @@ public class Advice_DeletePassword : AdvicesAbs
     }
 
     public void SetPasswordInfo(int index, GameObject go) {
-        mIndexNumber = index;
-        goToDelete = go;
+        _mIndexNumber = index;
+        _goToDelete = go;
     }
     public override void Continue() {
-        DataSaveManager.instance.DeletePassword(mIndexNumber);
-        Destroy(goToDelete);
+        DataSaveManager.instance.DeletePassword(_mIndexNumber);
+        Destroy(_goToDelete);
         GameManager.instance.ChangeGameStateE(Enums.AppStates.PasswordCont);
         Destroy(this);
     }

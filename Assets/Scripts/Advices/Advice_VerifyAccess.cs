@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Advice_VerifyAccess : AdvicesAbs
 {
@@ -56,10 +52,7 @@ public class Advice_VerifyAccess : AdvicesAbs
         }
     }
     
-    public override void Continue() {
-        
-        CheckInsertedPassword();
-    }
+    public override void Continue() => CheckInsertedPassword();
 
     public override void Return() {
         GameManager.instance.ChangeGameStateE(Enums.AppStates.Welcome);
