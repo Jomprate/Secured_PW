@@ -39,7 +39,7 @@ public class DataSaveManager : MonoBehaviour
         _createDirectory = GetComponent<CreateDirectory>();
         SaveFileName = "User";
         RestSaveFileName = "User";
-        FolderName = "SD";
+        FolderName = "SecuredPasswordData";
         FileExtension = ".SS";
         
         

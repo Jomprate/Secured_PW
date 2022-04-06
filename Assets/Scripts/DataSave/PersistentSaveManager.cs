@@ -12,7 +12,7 @@ public class PersistentSaveManager : MonoBehaviour
    
    
    private string _encryptedPath;
-   private const string FolderName = "SD";
+   private const string FolderName = "SecuredPasswordData";
    private const string EnSaveFileName = "enPersistent";
    private const string FileExtension = ".SS";
 
@@ -32,8 +32,7 @@ public class PersistentSaveManager : MonoBehaviour
    private void Needed() {
       saveUsersObject = new SaveUsersObject
       {
-         createdIds = new CreatedIds(CreateRandomId.GenerateRandom(10000,100000,1000000)),
-         createdUsers = new CreatedUsers(),
+         createdIds = new CreatedIds(),
          activeUsers = new ActiveUsers(),
          userDataL = new List<UserData>()
       };
@@ -46,7 +45,6 @@ public class PersistentSaveManager : MonoBehaviour
    public void Save() {
       saveUsersObject = new SaveUsersObject {
          createdIds = saveUsersObject.createdIds,
-         createdUsers = saveUsersObject.createdUsers,
          activeUsers = saveUsersObject.activeUsers,
          userDataL = saveUsersObject.userDataL,
       }; 
@@ -65,7 +63,6 @@ public class PersistentSaveManager : MonoBehaviour
 
          saveUsersObject.activeUsers = loadedDataObject.activeUsers;
          saveUsersObject.createdIds = loadedDataObject.createdIds;
-         saveUsersObject.createdUsers = loadedDataObject.createdUsers;
          saveUsersObject.userDataL = loadedDataObject.userDataL;
       }
       else
@@ -78,12 +75,12 @@ public class PersistentSaveManager : MonoBehaviour
       var userInfo = UserInfo.instance;
       UserData data = new UserData(
          
-         userInfo.UserId = saveUsersObject.createdIds.ids[saveUsersObject.createdUsers.createdU],
-         userInfo.UserAccessPath,
-         userInfo.UserEncrypt = userInfo.Encrypt,
-         userInfo.UserName,
-         userInfo.UserPassword,
-         userInfo.UsePassword = userInfo.usePassword
+         userInfo.newUser.UserId,
+         userInfo.newUser.UserAccessPath,
+         userInfo.newUser.UserName,
+         userInfo.newUser.UserPassword,
+         userInfo.newUser.UseEncryption,
+         userInfo.newUser.UsePassword
          
       );
       
@@ -96,8 +93,8 @@ public class PersistentSaveManager : MonoBehaviour
       UserData data = CreateUserData();
       
       data.userAccessPath = DataSaveManager.instance._Path;
-      saveUsersObject.createdUsers.createdU += 1;
       saveUsersObject.activeUsers.actUsers += 1;
+      saveUsersObject.createdIds.ids = CreateRandomId.ids;
       saveUsersObject.userDataL.Add(data);
 
       switch (encrypt)

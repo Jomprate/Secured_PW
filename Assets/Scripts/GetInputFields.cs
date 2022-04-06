@@ -9,16 +9,11 @@ public class GetInputFields : MonoBehaviour
 
     public List<TMP_InputField> GetFieldsW() {
         var inputFields = GetComponentsInChildren<IInputField>();
-        foreach (var inputField in inputFields)
-        {
-            if (inputField._inputFieldType == iType)
-            {
+        foreach (var inputField in inputFields) {
+            if (inputField._inputFieldType == iType) {
                 tmpInputFields.Add(inputField._inputField);
             }
-            
         }
-        
         return tmpInputFields;
     }
-    
 }

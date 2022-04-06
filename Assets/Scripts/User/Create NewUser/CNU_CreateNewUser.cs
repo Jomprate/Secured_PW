@@ -11,32 +11,31 @@ public class CNU_CreateNewUser : MonoBehaviour
         var go = Instantiate(prefab, content);
         var udic = go.gameObject.GetComponent<UserDataInCont>();
         
-        go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = usI.UserName;
+        go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = usI.newUser.UserName;
             
-        usI.UserId = psm.saveUsersObject.createdIds.ids[psm.saveUsersObject.createdUsers.createdU];
+        //usI.newUser.UserId = psm.saveUsersObject.createdIds.ids[psm.saveUsersObject.createdUsers.createdU];
+        usI.newUser.UserId = CreateRandomId.UniqueRandomInt();
             
-        udic.SetId(usI.UserId); udic.SetEncryptedB(usI.Encrypt);
-        usI.encrypt = usI.Encrypt;
-        udic.SetUsingPw(usI.UsePassword);
-        usI.usePassword = usI.UsePassword;
+        udic.SetId(usI.newUser.UserId); udic.SetEncryptedB(usI.newUser.UseEncryption); udic.SetUsingPw(usI.newUser.UsePassword);
+        
         
             
-        dsm.SaveFileName += usI.UserId;
+        dsm.SaveFileName += usI.newUser.UserId;
             
         crD.CreateNotEn(dsm.FolderName,dsm.SaveFileName,dsm.FileExtension);
         dsm._Path = crD.NormalPath;
-        usI.UserAccessPath = dsm._Path;
-        udic.SetPath(usI.UserAccessPath);
+        usI.newUser.UserAccessPath = dsm._Path;
+        udic.SetPath(usI.newUser.UserAccessPath);
         
-        switch (usI.Encrypt)
+        switch (usI.newUser.UseEncryption)
         {
             case true: 
                 psm.CreateNewUser(true);
-                dsm.CreatePersonalData(dsm.SaveFileName,usI.UserPassword,true);
+                dsm.CreatePersonalData(dsm.SaveFileName,usI.newUser.UserPassword,true);
                 break;
             case false: 
                 psm.CreateNewUser(false);
-                dsm.CreatePersonalData(dsm.SaveFileName,usI.UserPassword,false);
+                dsm.CreatePersonalData(dsm.SaveFileName,usI.newUser.UserPassword,false);
                 break;
         }
         psm.Save();

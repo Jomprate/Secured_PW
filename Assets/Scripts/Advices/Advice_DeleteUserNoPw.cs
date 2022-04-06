@@ -14,9 +14,9 @@ public class Advice_DeleteUserNoPw : AdvicesAbs
 
     public override void Awake()
     {
-        TitleText = "Borrar Usuario";
-        MessageText = "En Realidad deseas borrar este Usuario?\n\nNo podras recuperarlo despues de esto";
-        ContinueBtnText = "Borrar";
+        titleText = "Borrar Usuario";
+        messageText = "En Realidad deseas borrar este Usuario?\n\nNo podras recuperarlo despues de esto";
+        continueBtnText = "Borrar";
         requirePw = false;
         base.Awake();
         Instance = this;

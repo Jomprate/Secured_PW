@@ -44,11 +44,13 @@ public class CreateNewPassword : MonoBehaviour
 
     private void CreateNewPw() {
         var dsm = DataSaveManager.instance;
-            PasswordId  = _tmpInputFields[0].text;
-            Email       = _tmpInputFields[1].text;
-            UserName    = _tmpInputFields[2].text;
-            Password    = _tmpInputFields[3].text;
-            Description = _tmpInputFields[4].text;
+        
+        PasswordId  = _tmpInputFields[0].text;
+        Email       = _tmpInputFields[1].text;
+        UserName    = _tmpInputFields[2].text;
+        Password    = _tmpInputFields[3].text;
+        Description = _tmpInputFields[4].text;
+        
         dsm.CreateNewPasswordData();
         ResetPasswordConsole();
         GameManager.instance.PasswordContSec();

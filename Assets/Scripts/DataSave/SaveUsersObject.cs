@@ -6,15 +6,11 @@ using UnityEngine;
 [Serializable]
 public class SaveUsersObject
 {
-    public CreatedUsers createdUsers;
     public ActiveUsers activeUsers;
     public List<UserData> userDataL;
     public CreatedIds createdIds;
 }
-[Serializable]
-public class CreatedUsers {
-    public int createdU;
-}
+
 
 
 [Serializable]
@@ -28,10 +24,10 @@ public class CreatedIds
 {
     public List<int> ids;
 
-    public CreatedIds(List<int> ids)
+    /*public CreatedIds(List<int> ids)
     {
         this.ids = ids;
-    }
+    }*/
 }
 
 [Serializable]
@@ -39,18 +35,19 @@ public class UserData
 {
     public int userId;
     public string userAccessPath;
-    public bool userEncrypt;
     public string userName;
     public string userPassword;
+    public bool userUseEncryption;
     public bool userUsePassword;
     
-    public UserData(int userId,string userAccessPath,bool userEncrypt,string userName,string userPassword,bool userUsePassword)
+    
+    public UserData(int userId,string userAccessPath,string userName,string userPassword,bool userUseEncryption, bool userUsePassword)
     {
         this.userId = userId;
         this.userAccessPath = userAccessPath;
-        this.userEncrypt = userEncrypt;
         this.userName = userName;
         this.userPassword = userPassword;
+        this.userUseEncryption = userUseEncryption;
         this.userUsePassword = userUsePassword;
     }
     

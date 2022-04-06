@@ -17,8 +17,8 @@ public class Advice_VerifyPassword : AdvicesAbs
         gameObject.AddComponent<BlinkRed>();
         _blinkRed = GetComponent<BlinkRed>();
         
-        TitleText = "Verificacion";
-        MessageText = "Bienvenido, pero antes de acceder para visualizar las contraseñas\n\ndebes insertar la contraseña de tu usuario";
+        titleText = "Verificacion";
+        messageText = "Bienvenido, pero antes de acceder para visualizar las contraseñas\n\ndebes insertar la contraseña de tu usuario";
         requirePw = true;
         base.Awake();
         Instance = this;

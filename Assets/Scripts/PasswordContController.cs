@@ -15,28 +15,23 @@ public class PasswordContController : MonoBehaviour
         Instance = this;
     }
     
-    public void AddNewPassword(string id)
-    {
-        GameObject go;
-        go = Instantiate(passwordPrefab, contentTr);
+    public void AddNewPassword(string id) {
+        GameObject go = Instantiate(passwordPrefab, contentTr);
         go.GetComponent<PasswordDataInCont>().SetPasswordData(id);
-        
         go.transform.SetParent(contentTr);
         passwordsObjs.Add(go);
         SetIndex();
     }
 
     private void SetIndex() {
-        for (var i = 0; i < passwordsObjs.Count; i++)
-        {
+        for (var i = 0; i < passwordsObjs.Count; i++) {
             passwordsObjs[i].GetComponent<PasswordDataInCont>().m_IndexNumber = i;
         }
     }
     
     public void FillCont() {
         RemoveCont();
-        foreach (var passwordData in DataSaveManager.instance.saveDataObject.PasswordDataL)
-        {
+        foreach (var passwordData in DataSaveManager.instance.saveDataObject.PasswordDataL) {
             AddNewPassword(passwordData.passwordId);
         }
     }

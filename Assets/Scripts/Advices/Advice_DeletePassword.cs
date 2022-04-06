@@ -12,9 +12,9 @@ public class Advice_DeletePassword : AdvicesAbs
 
     public override void Awake()
     {
-        TitleText = "Borrar Contraseña";
-        MessageText = "En Realidad deseas borrar esta contraseña?\n\nNo podras recuperarla despues de esto";
-        ContinueBtnText = "Borrar";
+        titleText = "Borrar Contraseña";
+        messageText = "En Realidad deseas borrar esta contraseña?\n\nNo podras recuperarla despues de esto";
+        continueBtnText = "Borrar";
         requirePw = false;
         base.Awake();
         Instance = this;

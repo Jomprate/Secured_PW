@@ -26,32 +26,21 @@ public class TabInputField : MonoBehaviour
         EnableScript(false);
     }
 
-    public void EnableScript(bool enable)
-    {
-        switch (enable)
-        {
+    public void EnableScript(bool enable) {
+        switch (enable) {
             case true: _uiInputs.performed +=  ChangeInputSelected; 
                 break;
             case false: _uiInputs.performed -=  ChangeInputSelected; 
                 break;
         }
-        
     }
 
-    private void ChangeInputSelected(InputAction.CallbackContext context)
-    {
-        Debug.Log("Tab Pressed");
+    private void ChangeInputSelected(InputAction.CallbackContext context) {
         if (inputSelected >= inputFields.Count -1)  {
             inputSelected = 0;
         }else inputSelected += 1;
         SelectInputField();
     }
 
-    private void SelectInputField()
-    {
-        inputFields[inputSelected].Select();
-    }
-    
-    
-    
+    private void SelectInputField() => inputFields[inputSelected].Select();
 }

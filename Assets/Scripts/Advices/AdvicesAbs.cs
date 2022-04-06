@@ -12,11 +12,11 @@ public abstract class AdvicesAbs : MonoBehaviour, IAdvice,UsePW
     public InputAction UIInputs { get; set; }
     public Transform parentT;
 
-    public string TitleText;
+    public string titleText;
 
-    public string MessageText;
+    public string messageText;
 
-    public string ContinueBtnText;
+    public string continueBtnText;
     
     public TextMeshProUGUI Title { get; set; }
     public TextMeshProUGUI Message { get; set; }
@@ -43,18 +43,6 @@ public abstract class AdvicesAbs : MonoBehaviour, IAdvice,UsePW
         UIInputs = InputManager.userInputs.UIInputs.EnterKey;
     }
     
-    /*public virtual void EnableScript(bool enable)
-    {
-        switch (enable)
-        {
-            case true: UIInputs.performed +=  ContinueE; 
-                break;
-            case false: UIInputs.performed -=  ContinueE; 
-                break;
-        }
-        
-    }*/
-
     private void GetNeeded()
     {
         parentT = transform.GetChild(0).GetChild(1);
@@ -76,9 +64,9 @@ public abstract class AdvicesAbs : MonoBehaviour, IAdvice,UsePW
 
     private void SetTexts()
     {
-        Title.text = TitleText;
-        Message.text = MessageText;
-        ContinueBtnTmp.text = ContinueBtnText;
+        Title.text = titleText;
+        Message.text = messageText;
+        ContinueBtnTmp.text = continueBtnText;
     }
     
     private void ShowHidePw()

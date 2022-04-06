@@ -29,12 +29,19 @@ public class UserDataInCont : MonoBehaviour
         
         if (usingPw)
         {
-            deleteUserBtn.onClick.AddListener(() => { gm.ChangeGameStateE(Enums.AppStates.AdviceUserWithPw);Advice_DeleteUserWithPw.Instance.UpdateInfo(id,path,this.gameObject); });
+            deleteUserBtn.onClick.AddListener(() =>
+            {
+                gm.ChangeGameStateE(Enums.AppStates.AdviceUserWithPw);
+                Advice_DeleteUserWithPw.Instance.UpdateInfo(id,path, gameObject);
+            });
         }
         else
         {
-            //deleteUserBtn.onClick.AddListener(() => { PersistentSaveManager.Instance.DeleteUserNoPw(path); DeleteUser(); });
-            deleteUserBtn.onClick.AddListener(() => { gm.ChangeGameStateE(Enums.AppStates.AdviceUserNoPw);Advice_DeleteUserNoPw.Instance.UpdateInfo(id,path,this.gameObject); });
+            deleteUserBtn.onClick.AddListener(() =>
+            {
+                gm.ChangeGameStateE(Enums.AppStates.AdviceUserNoPw);
+                Advice_DeleteUserNoPw.Instance.UpdateInfo(id,path,gameObject);
+            });
         }
         
     }

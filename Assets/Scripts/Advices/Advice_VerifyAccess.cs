@@ -16,9 +16,9 @@ public class Advice_VerifyAccess : AdvicesAbs
         gameObject.AddComponent<BlinkRed>();
         _blinkRed = GetComponent<BlinkRed>();
         
-        TitleText = "Verificacion";
-        MessageText = "Bienvenido, pero antes de acceder para visualizar las contraseñas\n\ndebes insertar la contraseña de tu usuario";
-        ContinueBtnText = "Acceder";
+        titleText = "Verificacion";
+        messageText = "Bienvenido, pero antes de acceder para visualizar las contraseñas\n\ndebes insertar la contraseña de tu usuario";
+        continueBtnText = "Acceder";
         
         requirePw = true;
         base.Awake();
@@ -41,9 +41,7 @@ public class Advice_VerifyAccess : AdvicesAbs
         if (!usingPw) { gm.ChangeGameStateE(Enums.AppStates.PasswordCont); }
     }
     public override void CheckInsertedPassword() {
-
         if (InputFieldPw.text.Trim() == psm.GetCurrentUserPassword(_id)) {
-            Debug.Log("password accepted");
             gm.ChangeGameStateE(Enums.AppStates.PasswordCont);
         }
         else {

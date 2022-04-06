@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 
 
-public class UsIn_CheckTextLenght : MonoBehaviour
+public class USIN_CheckTextLenght : MonoBehaviour
 {
     public static bool CheckTextL(TMP_InputField inputText,int longRequired,BlinkRed br)
     {

@@ -18,7 +18,7 @@ public class CNU_UpdateUsers : MonoBehaviour
             var UDC = go.GetComponent<UserDataInCont>();
             UDC.id = PSM.saveUsersObject.userDataL[i].userId;
             UDC.path = PSM.saveUsersObject.userDataL[i].userAccessPath;
-            UDC.encrypted = PSM.saveUsersObject.userDataL[i].userEncrypt;
+            UDC.encrypted = PSM.saveUsersObject.userDataL[i].userUseEncryption;
             UDC.usingPw = PSM.saveUsersObject.userDataL[i].userUsePassword;
 
         }
