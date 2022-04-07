@@ -16,7 +16,7 @@ public class UserDataInCont : MonoBehaviour
     public string path;
     public bool encrypted;
     public bool usingPw;
-    public int m_IndexNumber;
+    //public int m_IndexNumber;
     private PersistentSaveManager psm;
     private GameManager gm;
 

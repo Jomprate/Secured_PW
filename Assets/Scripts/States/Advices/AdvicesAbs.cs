@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public abstract class AdvicesAbs : MonoBehaviour, IAdvice,UsePW
 {
     public InputManager InputManager { get; set; }
+    public InputAction _uiInputs;
     public InputAction UIInputs { get; set; }
     public Transform parentT;
 
@@ -29,19 +30,20 @@ public abstract class AdvicesAbs : MonoBehaviour, IAdvice,UsePW
     public TMP_InputField InputFieldPw { get; set; }
     public virtual void Awake()
     {
+        InputManager = InputManager.instance;
+        _uiInputs = InputManager.userInputs.UIInputs.EnterKey;
         GetNeeded();
         SetButtonsV();
         RequirePw = requirePw;
         ShowHidePw();
         SetTexts();
-        //EnableScript(true);
+        EnableScript(true);
+        
+        
+        
     }
 
-    private void Start()
-    {
-        InputManager = InputManager.instance;
-        UIInputs = InputManager.userInputs.UIInputs.EnterKey;
-    }
+   
     
     private void GetNeeded()
     {
@@ -73,8 +75,19 @@ public abstract class AdvicesAbs : MonoBehaviour, IAdvice,UsePW
     {
         InputFieldPw.gameObject.SetActive(RequirePw);
     }
+
+    public virtual void EnableScript(bool enable)
+    {
+        switch (enable) {
+            case true: _uiInputs.performed +=  EnterKey; 
+                break;
+            case false: _uiInputs.performed -=  EnterKey; 
+                break;
+        }
+    }
     
-    
+    public virtual void EnterKey(InputAction.CallbackContext context){} 
+
     public virtual void CheckInsertedPassword()
     {
     }

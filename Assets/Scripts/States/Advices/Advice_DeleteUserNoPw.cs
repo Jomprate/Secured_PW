@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Advice_DeleteUserNoPw : AdvicesAbs
@@ -22,6 +23,10 @@ public class Advice_DeleteUserNoPw : AdvicesAbs
         Instance = this;
         
     }
+
+    public override void EnterKey(InputAction.CallbackContext context) => Continue();
+
+
     public void UpdateInfo(int uid,string p,GameObject go) {
         _id = uid;
         _goToDelete = go;
@@ -33,14 +38,15 @@ public class Advice_DeleteUserNoPw : AdvicesAbs
         var gm = GameManager.instance;
         UDIC_DeleteUser.DeleteU(_id,_goToDelete);
         psm.DeleteUserNoPw(path);
+        EnableScript(false);
         Destroy(_goToDelete);
-        
         Destroy(this);
         gm.ChangeGameStateE(Enums.AppStates.Welcome);
     }
 
     public override void Return() {
         GameManager.instance.ChangeGameStateE(Enums.AppStates.Welcome);
+        EnableScript(false);
         Destroy(this);
     }
 }

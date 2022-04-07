@@ -31,7 +31,7 @@ public class DataSaveManager : MonoBehaviour
     public string json;
     public string enJson;
 
-    public bool Encrypt = false;
+    //public bool Encrypt = false;
 
     private void Awake()
     {
@@ -72,9 +72,6 @@ public class DataSaveManager : MonoBehaviour
         };
         return saveDataObject;
     }
-    
-
-    
 
     public void Save()
     {

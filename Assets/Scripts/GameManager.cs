@@ -73,10 +73,7 @@ public class GameManager : MonoBehaviour
             
         }
     }
-    public void TurnOffPanelArray()
-    {
-        
-    }
+   
     public void TurnOnAllPanels()
     {
         foreach (var canvasV in _getAllPanels.CanvasV)
@@ -93,9 +90,6 @@ public class GameManager : MonoBehaviour
             case Enums.AppStates.Initialization: Initialization();
                 break;
             case Enums.AppStates.Welcome: WelcomeCanvasSec();
-                PasswordContController.Instance.FillCont();
-                break;
-            case Enums.AppStates.MainMenu:
                 break;
             case Enums.AppStates.CreateNewUser: CreateNewUserSec();
                 break;
@@ -145,6 +139,8 @@ public class GameManager : MonoBehaviour
         CreateNewUser.gameObject.GetComponent<CreateNewUserController>().EnableScript(false);
         //_checkUserPassword.EnableScript(false);
         //WelcomeCanvas.gameObject.GetComponent<TabInputField>().EnableScript(true);
+        PasswordContController.Instance.FillCont();
+        CreateNewPassword.Instance.EnableScript(false);
         
     }
     
@@ -156,15 +152,7 @@ public class GameManager : MonoBehaviour
         CreateNewUser.gameObject.GetComponent<TabInputField>().EnableScript(true);
         CreateNewUser.gameObject.GetComponent<CreateNewUserController>().EnableScript(true);
         //_checkUserPassword.EnableScript(false);
-    }
-
-    public void CheckUserPasswordSec()
-    {
-        TurnOffAllPanels();
-        //SetCanvasState.SetState(true,CheckUserP);
-        CreateNewUser.gameObject.GetComponent<TabInputField>().EnableScript(false);
-        CreateNewUser.gameObject.GetComponent<CreateNewUserController>().EnableScript(false);
-        //_checkUserPassword.EnableScript(true);
+        CreateNewPassword.Instance.EnableScript(false);
     }
 
     public void PasswordContSec()
@@ -175,6 +163,7 @@ public class GameManager : MonoBehaviour
         CreateNewUser.gameObject.GetComponent<CreateNewUserController>().EnableScript(false);
         CreateNewPw.gameObject.GetComponent<TabInputField>().EnableScript(false);
         //_checkUserPassword.EnableScript(false);
+        CreateNewPassword.Instance.EnableScript(false);
     }
 
     public void CreateNewPwSec()
@@ -184,6 +173,7 @@ public class GameManager : MonoBehaviour
         CreateNewUser.gameObject.GetComponent<TabInputField>().EnableScript(false);
         CreateNewUser.gameObject.GetComponent<CreateNewUserController>().EnableScript(false);
         CreateNewPw.gameObject.GetComponent<TabInputField>().EnableScript(true);
+        CreateNewPassword.Instance.EnableScript(true);
         //_checkUserPassword.EnableScript(false);
     }
     
@@ -203,7 +193,7 @@ public class GameManager : MonoBehaviour
                 AdviceC.gameObject.AddComponent<Advice_DeleteUserWithPw>();
                 break;
             case Enums.AdviceType.CheckPw:
-                AdviceC.gameObject.AddComponent<Advice_VerifyPassword>();
+                
                 break;
             case Enums.AdviceType.VerifyAccess:
                 AdviceC.gameObject.AddComponent<Advice_VerifyAccess>();

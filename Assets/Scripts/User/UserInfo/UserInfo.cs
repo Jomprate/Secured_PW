@@ -37,21 +37,14 @@ public class UserInfo : MonoBehaviour
         usePwBtn.onClick.AddListener(() => { ChangeUsePasswordState();});
     }
     
-    public void CheckNewUserData()
-    {
+    public void CheckNewUserData() {
         switch (USIN_CheckNewUserData.CheckData(newUser.UsePassword,userNameTMP,passwordTMP,_blinkRed))
         {
-            case true:
-                UserAccepted = true;
-                SetUserInfo();
-                Debug.Log("user has been accepted");
+            case true: UserAccepted = true; SetUserInfo();
                 break;
-            case false:
-                UserAccepted = false;
-                Debug.Log("user has not been accepted");
+            case false: UserAccepted = false;
                 break;
         }
-        
     }
     
     
@@ -62,22 +55,20 @@ public class UserInfo : MonoBehaviour
             passwordTMP.text = string.Empty;
         }
     }
-    
-    public void ChangeEncryptState()
-    {
+
+    private void ChangeEncryptState() {
         newUser.UseEncryption = !newUser.UseEncryption;
         _encryptImage.color = newUser.UseEncryption ? greenC : redC;
     }
-    
-    public void ChangeUsePasswordState()
-    {
+
+    private void ChangeUsePasswordState() {
         newUser.UsePassword = !newUser.UsePassword;
         _usePasswordImage.color = newUser.UsePassword ? greenC : redC;
         
         ActiveOrUnActivePw();
     }
-    
-    public void SetUserInfo() {
+
+    private void SetUserInfo() {
         newUser.UserName = userNameTMP.text;
         newUser.UserPassword = passwordTMP.text;
     }

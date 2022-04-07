@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Advice_DeletePassword : AdvicesAbs
@@ -19,6 +20,12 @@ public class Advice_DeletePassword : AdvicesAbs
         base.Awake();
         Instance = this;
         
+    }
+
+
+    public override void EnterKey(InputAction.CallbackContext context)
+    {
+        Continue();
     }
 
     public void SetPasswordInfo(int index, GameObject go) {

@@ -25,7 +25,7 @@ public class PasswordContController : MonoBehaviour
 
     private void SetIndex() {
         for (var i = 0; i < passwordsObjs.Count; i++) {
-            passwordsObjs[i].GetComponent<PasswordDataInCont>().m_IndexNumber = i;
+            passwordsObjs[i].GetComponent<PasswordDataInCont>().mIndexNumber = i;
         }
     }
     

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Advice_VerifyAccess : AdvicesAbs
 {
@@ -20,7 +21,6 @@ public class Advice_VerifyAccess : AdvicesAbs
         titleText = "Verificacion";
         messageText = "Bienvenido, pero antes de acceder para visualizar las contraseñas\n\ndebes insertar la contraseña de tu usuario";
         continueBtnText = "Acceder";
-        
         requirePw = true;
         base.Awake();
         InputFieldPw.text = string.Empty;
@@ -29,10 +29,16 @@ public class Advice_VerifyAccess : AdvicesAbs
         psm = PersistentSaveManager.Instance;
         gm = GameManager.instance;
         
+        InputFieldPw.Select();        
     }
 
-    
-    
+
+    public override void EnterKey(InputAction.CallbackContext context)
+    {
+        Continue();
+    }
+
+
     public void SetInfoToWork(int userId) {
         _id = userId;
         PersistentSaveManager.Instance.GetCurrentUserPosition(_id);
@@ -46,6 +52,7 @@ public class Advice_VerifyAccess : AdvicesAbs
         if (InputFieldPw.text.Trim() == psm.GetCurrentUserPassword(_id)) {
             gm.ChangeGameStateE(Enums.AppStates.PasswordCont);
             InputFieldPw.text = String.Empty;
+            EnableScript(false);
             Destroy(_blinkRed);
             Destroy(this);
         }
@@ -64,6 +71,7 @@ public class Advice_VerifyAccess : AdvicesAbs
     public override void Return() {
         
         GameManager.instance.ChangeGameStateE(Enums.AppStates.Welcome);
+        EnableScript(false);
         Destroy(_blinkRed);
         Destroy(this);
     }

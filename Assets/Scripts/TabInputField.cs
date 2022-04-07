@@ -36,10 +36,14 @@ public class TabInputField : MonoBehaviour
     }
 
     private void ChangeInputSelected(InputAction.CallbackContext context) {
-        if (inputSelected >= inputFields.Count -1)  {
-            inputSelected = 0;
-        }else inputSelected += 1;
-        SelectInputField();
+        if (inputFields.Count >= 1)
+        {
+            if (inputSelected >= inputFields.Count -1)  {
+                inputSelected = 0;
+            }else inputSelected += 1;
+            SelectInputField();
+        }
+        
     }
 
     private void SelectInputField() => inputFields[inputSelected].Select();

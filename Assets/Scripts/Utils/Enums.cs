@@ -9,9 +9,7 @@ public static class Enums
     
         Initialization,
         Welcome,
-        MainMenu,
         CreateNewUser,
-        CheckUser,
         PasswordCont,
         CreateNewPw,
         AdvicePw,

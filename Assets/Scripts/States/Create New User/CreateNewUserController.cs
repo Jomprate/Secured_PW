@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 public class CreateNewUserController : MonoBehaviour
@@ -9,11 +8,11 @@ public class CreateNewUserController : MonoBehaviour
     [SerializeField] private GameObject userPrefab;
     [SerializeField] private Transform contentP;
     [SerializeField] private UserInfo userInfo;
-    [SerializeField] private Button createUser_btn;
-    [SerializeField] private Button return_Btn;
+    [SerializeField] private Button createUserBtn;
+    [SerializeField] private Button returnBtn;
     [HideInInspector] public List<Transform> childrenInContentP;
 
-    public static CreateNewUserController Instance;
+    
     public CreateDirectory createDirectory;
 
     private InputManager _inputManager;
@@ -21,9 +20,8 @@ public class CreateNewUserController : MonoBehaviour
 
     public void Initialize()
     {
-        Instance = this;
-        return_Btn.onClick.AddListener(() => { GameManager.instance.ChangeGameStateE(Enums.AppStates.Welcome);});
-        createUser_btn.onClick.AddListener(() => { Create();});
+        returnBtn.onClick.AddListener(() => { GameManager.instance.ChangeGameStateE(Enums.AppStates.Welcome);});
+        createUserBtn.onClick.AddListener(() => { Create();});
 
         _inputManager = InputManager.instance;
         _uiInputs = _inputManager.userInputs.UIInputs.EnterKey;
@@ -60,7 +58,7 @@ public class CreateNewUserController : MonoBehaviour
 
     private void SetIndex() {
         CNU_FillUsersContent.FillContent(contentP,childrenInContentP);
-        CNU_SetIndexForUsers.SetUsersIndex(childrenInContentP);
+        //CNU_SetIndexForUsers.SetUsersIndex(childrenInContentP);
     }
 
     

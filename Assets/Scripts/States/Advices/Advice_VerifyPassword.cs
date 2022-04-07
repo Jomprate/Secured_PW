@@ -4,9 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Advice_DeleteUserWithPw : AdvicesAbs
+public class Advice_VerifyPassword : AdvicesAbs
 {
-    public static Advice_DeleteUserWithPw Instance;
+    public static Advice_VerifyPassword Instance;
     private BlinkRed _blinkRed;
     private GameObject _goToDelete;
     private int _id;
@@ -17,23 +17,16 @@ public class Advice_DeleteUserWithPw : AdvicesAbs
         gameObject.AddComponent<BlinkRed>();
         _blinkRed = GetComponent<BlinkRed>();
         
-        titleText = "Borrar Usuario";
-        messageText = "En Realidad deseas borrar este Usuario?\n\nNo podras recuperarlo despues de esto, y dado que este usuario posee contraseña debes insertarla";
-        continueBtnText = "Borrar";
+        titleText = "Verificacion";
+        messageText = "Bienvenido, pero antes de acceder para visualizar las contraseñas\n\ndebes insertar la contraseña de tu usuario";
         requirePw = true;
-        
         base.Awake();
         Instance = this;
-        InputFieldPw.text = string.Empty;
         
     }
 
-    public void UpdateInfo(int uid,string p,GameObject go) {
-        _id = uid;
-        _goToDelete = go;
-        path = p;
-    }
     public override void CheckInsertedPassword() {
+        
         var psm = PersistentSaveManager.Instance;
         var gm = GameManager.instance;
         
