@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
 public class SaveUsersObject
@@ -11,23 +9,14 @@ public class SaveUsersObject
     public CreatedIds createdIds;
 }
 
-
-
 [Serializable]
 public class ActiveUsers {
     public int actUsers;
 }
 
-
 [Serializable]
-public class CreatedIds
-{
+public class CreatedIds {
     public List<int> ids;
-
-    /*public CreatedIds(List<int> ids)
-    {
-        this.ids = ids;
-    }*/
 }
 
 [Serializable]
@@ -39,7 +28,6 @@ public class UserData
     public string userPassword;
     public bool userUseEncryption;
     public bool userUsePassword;
-    
     
     public UserData(int userId,string userAccessPath,string userName,string userPassword,bool userUseEncryption, bool userUsePassword)
     {

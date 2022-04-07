@@ -31,6 +31,7 @@ public class Advice_VerifyPassword : AdvicesAbs
         path = p;
     }
     public override void CheckInsertedPassword() {
+        
         var psm = PersistentSaveManager.Instance;
         var gm = GameManager.instance;
         

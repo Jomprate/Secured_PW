@@ -27,18 +27,14 @@ public class UserDataInCont : MonoBehaviour
         thisBtn = GetComponent<Button>();
         thisBtn.onClick.AddListener(() => { ImPressed(); });
         
-        if (usingPw)
-        {
-            deleteUserBtn.onClick.AddListener(() =>
-            {
+        if (usingPw) {
+            deleteUserBtn.onClick.AddListener(() => {
                 gm.ChangeGameStateE(Enums.AppStates.AdviceUserWithPw);
                 Advice_DeleteUserWithPw.Instance.UpdateInfo(id,path, gameObject);
             });
         }
-        else
-        {
-            deleteUserBtn.onClick.AddListener(() =>
-            {
+        else {
+            deleteUserBtn.onClick.AddListener(() => {
                 gm.ChangeGameStateE(Enums.AppStates.AdviceUserNoPw);
                 Advice_DeleteUserNoPw.Instance.UpdateInfo(id,path,gameObject);
             });
@@ -46,30 +42,18 @@ public class UserDataInCont : MonoBehaviour
         
     }
 
-    public void ImPressed() {
+    private void ImPressed() {
         SetPasswordInfoInCons.instance.ResetPasswordInfo();
         DataSaveManager.instance.SetPathToWork(path,encrypted);
-        /*GameManager.instance.ChangeGameStateE(Enums.AppStates.CheckUser);
-        CheckUserPassword.instance.SetInfoToWork(id);*/
         GameManager.instance.ChangeGameStateE(Enums.AppStates.AdviceVerifyAccess);
+        Advice_VerifyAccess.Instance.SetInfoToWork(id);
         Advice_VerifyAccess.Instance.SetInfoToWork(id);
     }
     
-    private void DeleteUser() => UDIC_DeleteUser.DeleteU(id,gameObject);
-
-    private void DeleteUserB()
-    {
-        
-    }
-    
+    public void SetId(int i) => id = i;
     public void SetPath(string p) => path = p;
     public void SetEncryptedB(bool encrypt) => encrypted = encrypt;
     public void SetUsingPw(bool usingPassword) => usingPw = usingPassword;
     
-    public void SetPasswordData(string id)
-    {
-        idTMP.text = id;
-    }
-
-    public void SetId(int i) => id = i;
+    
 }

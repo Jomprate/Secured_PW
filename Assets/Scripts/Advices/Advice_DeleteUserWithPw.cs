@@ -21,8 +21,10 @@ public class Advice_DeleteUserWithPw : AdvicesAbs
         messageText = "En Realidad deseas borrar este Usuario?\n\nNo podras recuperarlo despues de esto, y dado que este usuario posee contraseña debes insertarla";
         continueBtnText = "Borrar";
         requirePw = true;
+        
         base.Awake();
         Instance = this;
+        InputFieldPw.text = string.Empty;
         
     }
 

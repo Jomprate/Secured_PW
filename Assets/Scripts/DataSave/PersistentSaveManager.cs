@@ -92,7 +92,7 @@ public class PersistentSaveManager : MonoBehaviour
    {
       UserData data = CreateUserData();
       
-      data.userAccessPath = DataSaveManager.instance._Path;
+      data.userAccessPath = DataSaveManager.instance.Path;
       saveUsersObject.activeUsers.actUsers += 1;
       saveUsersObject.createdIds.ids = CreateRandomId.ids;
       saveUsersObject.userDataL.Add(data);

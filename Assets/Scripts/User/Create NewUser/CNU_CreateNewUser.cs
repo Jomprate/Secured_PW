@@ -13,29 +13,26 @@ public class CNU_CreateNewUser : MonoBehaviour
         
         go.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = usI.newUser.UserName;
             
-        //usI.newUser.UserId = psm.saveUsersObject.createdIds.ids[psm.saveUsersObject.createdUsers.createdU];
         usI.newUser.UserId = CreateRandomId.UniqueRandomInt();
             
         udic.SetId(usI.newUser.UserId); udic.SetEncryptedB(usI.newUser.UseEncryption); udic.SetUsingPw(usI.newUser.UsePassword);
-        
-        
             
         dsm.SaveFileName += usI.newUser.UserId;
             
         crD.CreateNotEn(dsm.FolderName,dsm.SaveFileName,dsm.FileExtension);
-        dsm._Path = crD.NormalPath;
-        usI.newUser.UserAccessPath = dsm._Path;
+        dsm.Path = crD.NormalPath;
+        usI.newUser.UserAccessPath = dsm.Path;
         udic.SetPath(usI.newUser.UserAccessPath);
         
         switch (usI.newUser.UseEncryption)
         {
             case true: 
                 psm.CreateNewUser(true);
-                dsm.CreatePersonalData(dsm.SaveFileName,usI.newUser.UserPassword,true);
+                dsm.CreatePersonalData(dsm.SaveFileName,true);
                 break;
             case false: 
                 psm.CreateNewUser(false);
-                dsm.CreatePersonalData(dsm.SaveFileName,usI.newUser.UserPassword,false);
+                dsm.CreatePersonalData(dsm.SaveFileName,false);
                 break;
         }
         psm.Save();

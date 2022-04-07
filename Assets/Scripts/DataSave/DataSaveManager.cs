@@ -12,11 +12,11 @@ public class DataSaveManager : MonoBehaviour
     private CreateDirectory _createDirectory;
     
     
-    public string _Path { get; set; }
+    public string Path { get; set; }
     public string np;
     
     //private const string FolderName = "SD";
-    public string FolderName {get; set; }
+    public string FolderName {get; private set; }
     public  string SaveFileName { get; set; }
     public string RestSaveFileName { get; set; }
     
@@ -45,27 +45,21 @@ public class DataSaveManager : MonoBehaviour
         
     }
     
-    public void Start()
-    {
-        //Directory.CreateDirectory(Environment.ExpandEnvironmentVariables("%USERPROFILE%\\" + FolderName));
+    public void Start() {
         _createDirectory.Create(FolderName,SaveFileName,EnSaveFileName,FileExtension);
-        _Path = _createDirectory.NormalPath;
+        Path = _createDirectory.NormalPath;
         
-        
-        saveDataObject = new SaveDataObject
-        {
+        saveDataObject = new SaveDataObject {
             PasswordDataL = new List<PasswordData>()
         };
         json = JsonUtility.ToJson(saveDataObject);
         enJson = AESHandler.AesEncryption(json);;
-
        
         Load(); 
-        
     }
 
     public void SetPathToWork(string path, bool encrypted) {
-        _Path = path;
+        Path = path;
         Encrypted = encrypted;
         
         Load();
@@ -80,47 +74,7 @@ public class DataSaveManager : MonoBehaviour
     }
     
 
-    public void CreatePersonalDataNotEn(string saveFileName,string pw)
-    {
-        _createDirectory.CreateNotEn(FolderName,saveFileName,FileExtension);
-        _Path = _createDirectory.NormalPath;
-        saveDataObject = CreateCleanSaveDataObject();
-        json = JsonUtility.ToJson(saveDataObject);
-        enJson = AESHandler.AesEncryption(json);
-        Encrypted = false;
-        Save();
-    }
-
-    public void CreatePersonalDataEn(string saveFileName,string pw)
-    {
-        _createDirectory.CreateNotEn(FolderName,saveFileName,FileExtension);
-        _Path = _createDirectory.NormalPath;
-        saveDataObject = CreateCleanSaveDataObject();
-        json = JsonUtility.ToJson(saveDataObject);
-        enJson = AESHandler.AesEncryption(json);;
-        Encrypted = true;
-        Save();
-    }
-
-    public void CreatePersonalData(string saveFileName, string pw, bool encrypted)
-    {
-        _createDirectory.CreateNotEn(FolderName,saveFileName,FileExtension);
-        _Path = _createDirectory.NormalPath;
-        saveDataObject = CreateCleanSaveDataObject();
-        json = JsonUtility.ToJson(saveDataObject);
-        enJson = AESHandler.AesEncryption(json);;
-        Encrypted = encrypted;
-        Save();
-    }
     
-
-    public void DeletePassword(int index)
-    {
-        saveDataObject.PasswordDataL.RemoveAt(index);
-        Save();
-        PasswordContController.Instance.FillCont();
-        
-    }
 
     public void Save()
     {
@@ -129,25 +83,24 @@ public class DataSaveManager : MonoBehaviour
         }; 
         json = JsonUtility.ToJson(saveDataObject);
         enJson = AESHandler.AesEncryption(json);
-         switch (Encrypted)
-         {
+         switch (Encrypted) {
              case true:
                  enJson = AESHandler.AesEncryption(enJson);
-                 File.WriteAllText(_Path,enJson);
+                 File.WriteAllText(Path,enJson);
                  return;
              case false:
-                 File.WriteAllText(_Path,json);
+                 File.WriteAllText(Path,json);
                  break;
          }
     }
 
-    public void Load()
+    private void Load()
     {
-        if (File.Exists(_Path))
+        if (File.Exists(Path))
         {
             SaveDataObject loadedDataObject;
-            string saveString = File.ReadAllText(_Path);
-            string saveEnString = File.ReadAllText(_Path);
+            string saveString = File.ReadAllText(Path);
+            string saveEnString = File.ReadAllText(Path);
             switch (Encrypted)
             {
                 case true:
@@ -170,41 +123,30 @@ public class DataSaveManager : MonoBehaviour
             Save();
         }
     }
-
-    public void DeleteSave()
+    
+    public void CreatePersonalData(string saveFileName, bool encrypted)
     {
-        saveDataObject.PasswordDataL.Clear();
-        
-        File.Delete(_Path);
-        
-        //Load();
+        _createDirectory.CreateNotEn(FolderName,saveFileName,FileExtension);
+        Path = _createDirectory.NormalPath;
+        saveDataObject = CreateCleanSaveDataObject();
+        json = JsonUtility.ToJson(saveDataObject);
+        enJson = AESHandler.AesEncryption(json);;
+        Encrypted = encrypted;
         Save();
-        
     }
     
-    public void CreateNewPasswordData()
-    {
-        var createNewPassword = CreateNewPassword.instance;
-        PasswordData data = new PasswordData(
-            createNewPassword.PasswordId,
-            createNewPassword.Email,
-            createNewPassword.UserName,
-            createNewPassword.Password,
-            createNewPassword.Description
-        );
-        
+    public void CreateNewPasswordData() {
+        var data = DSM_CreateNewPwData.CreateNewPasswordData(saveDataObject);
         saveDataObject.PasswordDataL.Add(data);
         Save();
         PasswordContController.Instance.AddNewPassword(data.passwordId);
-
     }
     
-    
-
-    
-    
-    
-    
+    public void DeletePassword(int index)
+    {
+        saveDataObject.PasswordDataL.RemoveAt(index);
+        Save();
+        PasswordContController.Instance.FillCont();
+        
+    }
 }
-
-

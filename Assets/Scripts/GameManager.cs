@@ -23,15 +23,12 @@ public class GameManager : MonoBehaviour
 
     private GetAllPanels _getAllPanels;
 
-    
-    public CanvasGroup WelcomeCanvas { get; set; }
-    public CanvasGroup CreateNewUser { get; set; }
-    
-    public CanvasGroup PasswordContainer { get; set; }
 
-    public CanvasGroup CreateNewPw { get; set; }
-    
-    public CanvasGroup AdviceC { get; set; }
+    private CanvasGroup WelcomeCanvas { get; set; }
+    private CanvasGroup CreateNewUser { get; set; }
+    private CanvasGroup PasswordContainer { get; set; }
+    private CanvasGroup CreateNewPw { get; set; }
+    private CanvasGroup AdviceC { get; set; }
 
     private void Awake()
     {
@@ -46,9 +43,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         
-        /*AppEvents.Instance.OnAppStateChange += ChangeGameStateE;
-        _getAllPanels = FindObjectOfType<GetAllPanels>();
-        _getAllPanels.Initialize();*/
+       
         SetAllPanels();
         ChangeGameStateE(Enums.AppStates.Initialization);
         
@@ -95,51 +90,28 @@ public class GameManager : MonoBehaviour
     {
         switch (gameState)
         {
-            case Enums.AppStates.Initialization:
-                persistentSaveManager.Initialize();
-                _userInfo.Initialize();
-                createNewUserController.Initialize();
-                //_checkUserPassword.Initialize();
-                passwordContController.Initialize();
-                _createNewPassword.Initialize();
-                //_adviceDeletePassword.Initialize();
-                
-                
-                
-                ChangeGameStateE(Enums.AppStates.Welcome);
+            case Enums.AppStates.Initialization: Initialization();
                 break;
-            case Enums.AppStates.Welcome:
-                WelcomeCanvasSec();
+            case Enums.AppStates.Welcome: WelcomeCanvasSec();
                 PasswordContController.Instance.FillCont();
                 break;
             case Enums.AppStates.MainMenu:
                 break;
-            case Enums.AppStates.CreateNewUser:
-                CreateNewUserSec();
+            case Enums.AppStates.CreateNewUser: CreateNewUserSec();
                 break;
-            /*case Enums.AppStates.CheckUser:
-                CheckUserPasswordSec();
-                break;*/
-            case Enums.AppStates.PasswordCont:
-                PasswordContSec();
+            case Enums.AppStates.PasswordCont: PasswordContSec();
                 break;
-            case Enums.AppStates.CreateNewPw:
-                CreateNewPwSec();
+            case Enums.AppStates.CreateNewPw: CreateNewPwSec();
                 break;
-            case Enums.AppStates.AdvicePw:
-                AdviceSec(Enums.AdviceType.Password);
+            case Enums.AppStates.AdvicePw: AdviceSec(Enums.AdviceType.Password);
                 break;
-            case Enums.AppStates.AdviceUserNoPw:
-                AdviceSec(Enums.AdviceType.UserNoPw);
+            case Enums.AppStates.AdviceUserNoPw: AdviceSec(Enums.AdviceType.UserNoPw);
                 break;
-            case Enums.AppStates.AdviceUserWithPw:
-                AdviceSec(Enums.AdviceType.UserWithPw);
+            case Enums.AppStates.AdviceUserWithPw: AdviceSec(Enums.AdviceType.UserWithPw);
                 break;
-            case Enums.AppStates.AdviceCheckPw:
-                AdviceSec(Enums.AdviceType.CheckPw);
+            case Enums.AppStates.AdviceCheckPw: AdviceSec(Enums.AdviceType.CheckPw);
                 break;
-            case Enums.AppStates.AdviceVerifyAccess:
-                AdviceSec(Enums.AdviceType.VerifyAccess);
+            case Enums.AppStates.AdviceVerifyAccess: AdviceSec(Enums.AdviceType.VerifyAccess);
                 break;
             case Enums.AppStates.StartGame:
                 break;
@@ -149,6 +121,16 @@ public class GameManager : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException(nameof(gameState), gameState, null);
         }
+    }
+
+    public void Initialization()
+    {
+        persistentSaveManager.Initialize();
+        _userInfo.Initialize();
+        createNewUserController.Initialize();
+        passwordContController.Initialize();
+        _createNewPassword.Initialize();
+        ChangeGameStateE(Enums.AppStates.Welcome);
     }
 
     public void WelcomeCanvasSec()

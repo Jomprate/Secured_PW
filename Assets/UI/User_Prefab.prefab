@@ -135,12 +135,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a3e6e3ecf93eba45b41c6d564ee56be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idTMP: {fileID: 0}
+  idTMP: {fileID: 497828117846297809}
   deleteUserBtn: {fileID: 4523261509589523024}
-  m_IndexNumber: 0
   id: 0
   path: 
   encrypted: 0
+  usingPw: 0
+  m_IndexNumber: 0
 --- !u!1 &941426605040946677
 GameObject:
   m_ObjectHideFlags: 0
