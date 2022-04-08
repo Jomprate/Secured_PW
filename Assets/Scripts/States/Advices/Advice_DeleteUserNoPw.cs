@@ -24,7 +24,7 @@ public class Advice_DeleteUserNoPw : AdvicesAbs
         
     }
 
-    public override void EnterKey(InputAction.CallbackContext context) => Continue();
+    protected override void EnterKey(InputAction.CallbackContext context) => Continue();
 
 
     public void UpdateInfo(int uid,string p,GameObject go) {

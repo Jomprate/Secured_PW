@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -19,10 +17,11 @@ public class TabInputField : MonoBehaviour
     public void Awake()
     {
         getInputFields = GetComponent<GetInputFields>();
+        inputFields = getInputFields.GetFieldsW();
+        
         inputManager = InputManager.instance;
         _uiInputs = inputManager.userInputs.UIInputs.TabInputChange;
         
-        inputFields = getInputFields.GetFieldsW();
         EnableScript(false);
     }
 

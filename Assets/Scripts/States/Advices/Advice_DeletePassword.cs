@@ -23,7 +23,7 @@ public class Advice_DeletePassword : AdvicesAbs
     }
 
 
-    public override void EnterKey(InputAction.CallbackContext context)
+    protected override void EnterKey(InputAction.CallbackContext context)
     {
         Continue();
     }

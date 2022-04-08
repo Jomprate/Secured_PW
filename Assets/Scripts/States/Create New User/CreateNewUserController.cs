@@ -27,17 +27,16 @@ public class CreateNewUserController : MonoBehaviour
         _uiInputs = _inputManager.userInputs.UIInputs.EnterKey;
     }
 
-    public void EnableScript(bool enable)
-    {
+    public void EnableScript(bool enable) {
         switch (enable) {
-            case true: _uiInputs.performed +=  CreateB; 
+            case true: _uiInputs.performed +=  EnterKey; 
                 break;
-            case false: _uiInputs.performed -=  CreateB; 
+            case false: _uiInputs.performed -=  EnterKey; 
                 break;
         }
     }
 
-    private void CreateB(InputAction.CallbackContext context) => Create();
+    private void EnterKey(InputAction.CallbackContext context) => Create();
     
 
     private void Create() {

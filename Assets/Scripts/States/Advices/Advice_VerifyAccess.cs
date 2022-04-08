@@ -33,7 +33,7 @@ public class Advice_VerifyAccess : AdvicesAbs
     }
 
 
-    public override void EnterKey(InputAction.CallbackContext context)
+    protected override void EnterKey(InputAction.CallbackContext context)
     {
         Continue();
     }

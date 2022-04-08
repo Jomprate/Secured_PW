@@ -10,7 +10,7 @@ public abstract class AdvicesAbs : MonoBehaviour, IAdvice,UsePW
 {
     public InputManager InputManager { get; set; }
     public InputAction _uiInputs;
-    public InputAction UIInputs { get; set; }
+    
     public Transform parentT;
 
     public string titleText;
@@ -38,9 +38,6 @@ public abstract class AdvicesAbs : MonoBehaviour, IAdvice,UsePW
         ShowHidePw();
         SetTexts();
         EnableScript(true);
-        
-        
-        
     }
 
    
@@ -58,26 +55,20 @@ public abstract class AdvicesAbs : MonoBehaviour, IAdvice,UsePW
 
     }
 
-    private void SetButtonsV()
-    {
+    private void SetButtonsV() {
         ContinueBtn.onClick.AddListener(Continue);
         ReturnBtn.onClick.AddListener(Return);
     }
 
-    private void SetTexts()
-    {
+    private void SetTexts() {
         Title.text = titleText;
         Message.text = messageText;
         ContinueBtnTmp.text = continueBtnText;
     }
     
-    private void ShowHidePw()
-    {
-        InputFieldPw.gameObject.SetActive(RequirePw);
-    }
+    private void ShowHidePw() => InputFieldPw.gameObject.SetActive(RequirePw);
 
-    public virtual void EnableScript(bool enable)
-    {
+    public virtual void EnableScript(bool enable) {
         switch (enable) {
             case true: _uiInputs.performed +=  EnterKey; 
                 break;
@@ -85,18 +76,13 @@ public abstract class AdvicesAbs : MonoBehaviour, IAdvice,UsePW
                 break;
         }
     }
-    
-    public virtual void EnterKey(InputAction.CallbackContext context){} 
+
+    protected virtual void EnterKey(InputAction.CallbackContext context){} 
 
     public virtual void CheckInsertedPassword()
     {
     }
 
-    public void ContinueE(InputAction.CallbackContext context)
-    {
-        Continue();
-    }
-    
     public virtual void Continue()
     {
     }

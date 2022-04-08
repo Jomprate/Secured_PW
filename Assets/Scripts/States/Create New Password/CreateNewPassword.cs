@@ -37,19 +37,22 @@ public class CreateNewPassword : MonoBehaviour
         
         inputManager = InputManager.instance;
         _uiInputs = inputManager.userInputs.UIInputs.EnterKey;
+        
+        tmpInputFields[0].Select();
+        _cnpCreateNewPw.SetNeeded(Instance,tmpInputFields);
     }
     public void EnableScript(bool enable) {
         switch (enable) {
-            case true: _uiInputs.performed +=  CreateB; 
+            case true: _uiInputs.performed +=  EnterKey; 
                 break;
-            case false: _uiInputs.performed -=  CreateB; 
+            case false: _uiInputs.performed -=  EnterKey; 
                 break;
         }
     }
-    private void CreateB(InputAction.CallbackContext context) => CreateNewPw();
+    private void EnterKey(InputAction.CallbackContext context) => CreateNewPw();
     
     private void CreateNewPw() {
-        _cnpCreateNewPw.CreateNewPw(Instance,tmpInputFields);
+        _cnpCreateNewPw.CreateNewPw();
     }
     private void ReturnV() {
         GameManager.instance.ChangeGameStateE(Enums.AppStates.PasswordCont);

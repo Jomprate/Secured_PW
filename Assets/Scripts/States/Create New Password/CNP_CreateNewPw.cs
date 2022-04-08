@@ -1,36 +1,43 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class CNP_CreateNewPw : MonoBehaviour
 {
-    public void CreateNewPw(CreateNewPassword cnp ,IReadOnlyList<TMP_InputField> tmpInputFields) {
+    private CreateNewPassword _cnp;
+    private List<TMP_InputField> _tmpInputFields;
+    public void SetNeeded(CreateNewPassword createNewPassword, List<TMP_InputField> inputFields)
+    {
+        _cnp = createNewPassword;
+        _tmpInputFields = inputFields;
+    }
+    
+    public void CreateNewPw() {
         var dsm = DataSaveManager.instance;
         
         
-        cnp.PasswordId  = tmpInputFields[0].text;
-        cnp.Email       = tmpInputFields[1].text;
-        cnp.UserName    = tmpInputFields[2].text;
-        cnp.Password    = tmpInputFields[3].text;
-        cnp.Description = tmpInputFields[4].text;
+        _cnp.PasswordId  = _tmpInputFields[0].text;
+        _cnp.Email       = _tmpInputFields[1].text;
+        _cnp.UserName    = _tmpInputFields[2].text;
+        _cnp.Password    = _tmpInputFields[3].text;
+        _cnp.Description = _tmpInputFields[4].text;
         
         dsm.CreateNewPasswordData();
-        ResetPasswordConsole(cnp,tmpInputFields);
+        ResetPasswordConsole();
         GameManager.instance.PasswordContSec();
     }
 
 
     // ReSharper disable once MemberCanBeMadeStatic.Local
-    private void ResetPasswordConsole(CreateNewPassword cnp, IEnumerable<TMP_InputField> tmpInputFields )
+    private void ResetPasswordConsole( )
     {
-        cnp.PasswordId = null;
-        cnp.Email = null;
-        cnp.UserName = null;
-        cnp.Password = null;
-        cnp.Description = null;
+        _cnp.PasswordId = null;
+        _cnp.Email = null;
+        _cnp.UserName = null;
+        _cnp.Password = null;
+        _cnp.Description = null;
 
-        foreach (var inputField in tmpInputFields)
+        foreach (var inputField in _tmpInputFields)
         {
             inputField.text = null;
         }

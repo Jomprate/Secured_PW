@@ -29,7 +29,7 @@ public class Advice_DeleteUserWithPw : AdvicesAbs
         
     }
 
-    public override void EnterKey(InputAction.CallbackContext context) => Continue();
+    protected override void EnterKey(InputAction.CallbackContext context) => Continue();
 
     public void UpdateInfo(int uid,string p,GameObject go) {
         _id = uid;
