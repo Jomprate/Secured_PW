@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  
+  <Espanol>
+
+      <string name="WelcomeTitle">Bienvenido</string>
+      <string name="WelcomeM1">Esta aplicación la desarrolle con el fin de tener las contraseñas que requiera de una forma simple y segura. Lo que guardes aquí estará únicamente en tu equipo, y nada se transferirá por internet.</string>
+      <string name="WelcomeM2">En la parte inferior verás los usuarios creados, en el caso de que no exista alguno, presiona en el signo +.</string>
+      
+      <string name="CNU_Title">Crear Nuevo usuario</string>
+      <string name="CNU_M1">Bienvenido, vamos a crear un nuevo usuario, para ello debes ingresar el nombre de tu usuario y una respectiva contraseña si lo deseas.</string>
+      <string name="CNU_UPW">Presiona este botón para activar el uso de contraseña.</string>
+      <string name="CNU_UE">Presiona este botón para activar su encriptado.</string>
+
+
+      <string name="User">Usuario</string>
+      <string name="UserEx">tu nombre de usuario (min 7)</string>
+      <string name="Password">Contraseña</string>
+      <string name="PasswordEx">tu contraseña (min 7)</string>
+      <string name="Encrypt">Encriptar</string>
+      <string name="Create">Crear</string>
+      <string name="Return">Regresar</string>
+      <string name="Continue">Continuar</string>
+      <string name="Email">Correo</string>
+      <string name="Description">Descripción</string>
+      
+
+      <string name="CNP_Title">Crear Nueva contraseña</string>
+      <string name="CNP_M1">Bienvenido, vamos a crear una nueva contraseña, para ello ingresa la información que requieras, el ID es como será nombrada tu contraseña.</string>
+      <string name="CNP_UPW">Presiona este boton para activar el uso de contraseña.</string>
+      <string name="CNP_UE">Presiona este boton para activar su encriptado.</string>
+      <string name="Id">Id</string>
+      <string name="IdEx">nombre de la contraseña</string>
+      <string name="EmailPh2">tu correo</string>
+      <string name="UserPh2">tu usuario</string>
+      <string name="PasswordPh2">tu contraseña</string>
+      <string name="DescriptionPh2">Descripción u otra información que requieras.</string>
+
+      
+      <string name="Advice_DUNP_Title">Borrar Usuario</string>
+      <string name="Advice_DUNP_Message">En realidad deseas borrar este usuario?\n\nNo podrás recuperarlo después de esto.</string>
+      <string name="Advice_DUNP_ContBtn">Borrar</string>
+
+      <string name="Advice_DUWP_Title">Borrar Usuario</string>
+      <string name="Advice_DUWP_Message">En Realidad deseas borrar este Usuario?\n\nNo podras recuperarlo despues de esto, y dado que este usuario posee contraseña debes insertarla</string>
+      <string name="Advice_DUWP_ContBtn">Borrar</string>
+
+      <string name="Advice_DP_Title">Borrar Contraseña</string>
+      <string name="Advice_DP_Message">En realidad deseas borrar esta contraseña?\n\nNo podrás recuperarla despues de esto</string>
+      <string name="Advice_DP_ContBtn">Borrar</string>
+
+      <string name="Advice_VA_Title">Verificacion</string>
+      <string name="Advice_VA_Message">Bienvenido, pero antes de acceder para visualizar las contraseñas\n\nDebes insertar la contraseña del usuario.</string>
+      <string name="Advice_VA_ContBtn">Acceder</string>
+
+      <string name="Settings_Title">Configuración</string>
+
+    
+  </Espanol>
+  
+</languages>

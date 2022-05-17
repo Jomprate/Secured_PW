@@ -18,9 +18,10 @@ public class Advice_VerifyAccess : AdvicesAbs
         gameObject.AddComponent<BlinkRed>();
         _blinkRed = GetComponent<BlinkRed>();
         
-        titleText = "Verificacion";
-        messageText = "Bienvenido, pero antes de acceder para visualizar las contraseñas\n\ndebes insertar la contraseña de tu usuario";
-        continueBtnText = "Acceder";
+        titleTextId = "Advice_VA_Title";
+        messageTextId = "Advice_VA_Message";
+        continueBtnTextId = "Advice_VA_ContBtn";
+        returnBtnTextId = "Return";
         requirePw = true;
         base.Awake();
         InputFieldPw.text = string.Empty;
@@ -33,11 +34,7 @@ public class Advice_VerifyAccess : AdvicesAbs
     }
 
 
-    protected override void EnterKey(InputAction.CallbackContext context)
-    {
-        Continue();
-    }
-
+    protected override void EnterKey(InputAction.CallbackContext context) => Continue();
 
     public void SetInfoToWork(int userId) {
         _id = userId;
@@ -46,15 +43,14 @@ public class Advice_VerifyAccess : AdvicesAbs
     }
     private void CheckIfNeedPw() {
         var usingPw = psm.GetPasswordNeeded(_id);
-        if (!usingPw) { gm.ChangeGameStateE(Enums.AppStates.PasswordCont); Destroy(_blinkRed); Destroy(this);}
+        if (usingPw) return;
+        gm.ChangeGameStateE(Enums.AppStates.PasswordCont); Destroy(_blinkRed); Destroy(this);
     }
     public override void CheckInsertedPassword() {
         if (InputFieldPw.text.Trim() == psm.GetCurrentUserPassword(_id)) {
             gm.ChangeGameStateE(Enums.AppStates.PasswordCont);
-            InputFieldPw.text = String.Empty;
-            EnableScript(false);
-            Destroy(_blinkRed);
-            Destroy(this);
+            InputFieldPw.text = string.Empty;
+            Destroy(_blinkRed); EnableScript(false); Destroy(this);
         }
         else {
             Debug.Log(psm.GetCurrentUserPassword(_id));
@@ -63,16 +59,12 @@ public class Advice_VerifyAccess : AdvicesAbs
         }
     }
 
-    public override void Continue()
-    {
+    protected override void Continue() {
         CheckInsertedPassword();
     }
 
-    public override void Return() {
-        
+    protected override void Return() {
         GameManager.instance.ChangeGameStateE(Enums.AppStates.Welcome);
-        EnableScript(false);
-        Destroy(_blinkRed);
-        Destroy(this);
+        Destroy(_blinkRed); EnableScript(false); Destroy(this);
     }
 }

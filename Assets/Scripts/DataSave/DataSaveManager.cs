@@ -13,8 +13,7 @@ public class DataSaveManager : MonoBehaviour
     
     
     public string Path { get; set; }
-    public string np;
-    
+
     //private const string FolderName = "SD";
     public string FolderName {get; private set; }
     public  string SaveFileName { get; set; }
@@ -33,16 +32,13 @@ public class DataSaveManager : MonoBehaviour
 
     //public bool Encrypt = false;
 
-    private void Awake()
-    {
+    private void Awake() {
         instance = this;
         _createDirectory = GetComponent<CreateDirectory>();
         SaveFileName = "User";
         RestSaveFileName = "User";
         FolderName = "SecuredPasswordData";
         FileExtension = ".SS";
-        
-        
     }
     
     public void Start() {
@@ -61,7 +57,6 @@ public class DataSaveManager : MonoBehaviour
     public void SetPathToWork(string path, bool encrypted) {
         Path = path;
         Encrypted = encrypted;
-        
         Load();
         PasswordContController.Instance.FillCont();
     }
@@ -73,8 +68,7 @@ public class DataSaveManager : MonoBehaviour
         return saveDataObject;
     }
 
-    public void Save()
-    {
+    public void Save() {
         saveDataObject = new SaveDataObject {
             PasswordDataL = saveDataObject.PasswordDataL,
         }; 
@@ -113,7 +107,6 @@ public class DataSaveManager : MonoBehaviour
                     Save();
                     break;
             }
-            
         }
         else
         {
@@ -121,8 +114,7 @@ public class DataSaveManager : MonoBehaviour
         }
     }
     
-    public void CreatePersonalData(string saveFileName, bool encrypted)
-    {
+    public void CreatePersonalData(string saveFileName, bool encrypted) {
         _createDirectory.CreateNotEn(FolderName,saveFileName,FileExtension);
         Path = _createDirectory.NormalPath;
         saveDataObject = CreateCleanSaveDataObject();

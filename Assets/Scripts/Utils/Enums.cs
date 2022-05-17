@@ -15,8 +15,8 @@ public static class Enums
         AdvicePw,
         AdviceUserNoPw,
         AdviceUserWithPw,
-        AdviceCheckPw,
         AdviceVerifyAccess,
+        Settings,
         StartGame
     }
     
@@ -28,6 +28,7 @@ public static class Enums
         PasswordContainer,
         CreateNewPassword,
         AdvicePasswordD,
+        Settings
 
 
     }

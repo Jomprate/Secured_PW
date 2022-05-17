@@ -18,9 +18,10 @@ public class Advice_DeleteUserWithPw : AdvicesAbs
         gameObject.AddComponent<BlinkRed>();
         _blinkRed = GetComponent<BlinkRed>();
         
-        titleText = "Borrar Usuario";
-        messageText = "En Realidad deseas borrar este Usuario?\n\nNo podras recuperarlo despues de esto, y dado que este usuario posee contraseña debes insertarla";
-        continueBtnText = "Borrar";
+        titleTextId = "Advice_DUWP_Title";
+        messageTextId = "Advice_DUWP_Message";
+        continueBtnTextId = "Advice_DUWP_ContBtn";
+        returnBtnTextId = "Return";
         requirePw = true;
         
         base.Awake();
@@ -54,13 +55,13 @@ public class Advice_DeleteUserWithPw : AdvicesAbs
             InputFieldPw.text = string.Empty;
         }
     }
-    
-    public override void Continue() {
+
+    protected override void Continue() {
         
         CheckInsertedPassword();
     }
 
-    public override void Return() {
+    protected override void Return() {
         GameManager.instance.ChangeGameStateE(Enums.AppStates.Welcome);
         EnableScript(false);
         Destroy(_blinkRed);

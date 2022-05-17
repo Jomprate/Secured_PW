@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -15,14 +16,17 @@ public class Advice_DeleteUserNoPw : AdvicesAbs
 
     public override void Awake()
     {
-        titleText = "Borrar Usuario";
-        messageText = "En Realidad deseas borrar este Usuario?\n\nNo podras recuperarlo despues de esto";
-        continueBtnText = "Borrar";
+        titleTextId = "Advice_DUNP_Title";
+        messageTextId = "Advice_DUNP_Message";
+        continueBtnTextId = "Advice_DUNP_ContBtn";
+        returnBtnTextId = "Return";
         requirePw = false;
         base.Awake();
         Instance = this;
         
     }
+
+    
 
     protected override void EnterKey(InputAction.CallbackContext context) => Continue();
 
@@ -32,8 +36,8 @@ public class Advice_DeleteUserNoPw : AdvicesAbs
         _goToDelete = go;
         path = p;
     }
-    
-    public override void Continue() {
+
+    protected override void Continue() {
         var psm = PersistentSaveManager.Instance;
         var gm = GameManager.instance;
         UDIC_DeleteUser.DeleteU(_id,_goToDelete);
@@ -44,7 +48,7 @@ public class Advice_DeleteUserNoPw : AdvicesAbs
         gm.ChangeGameStateE(Enums.AppStates.Welcome);
     }
 
-    public override void Return() {
+    protected override void Return() {
         GameManager.instance.ChangeGameStateE(Enums.AppStates.Welcome);
         EnableScript(false);
         Destroy(this);

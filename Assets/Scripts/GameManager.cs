@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     private CanvasGroup PasswordContainer { get; set; }
     private CanvasGroup CreateNewPw { get; set; }
     private CanvasGroup AdviceC { get; set; }
+    
+    private CanvasGroup SettingsC { get; set; }
 
     private void Awake()
     {
@@ -56,6 +58,7 @@ public class GameManager : MonoBehaviour
         PasswordContainer = _getAllPanels.CanvasV[2].CanvasGroupP;
         CreateNewPw = _getAllPanels.CanvasV[3].CanvasGroupP;
         AdviceC = _getAllPanels.CanvasV[4].CanvasGroupP;
+        SettingsC = _getAllPanels.CanvasV[5].CanvasGroupP;
 
         TurnOffAllPanels();
     }
@@ -103,15 +106,12 @@ public class GameManager : MonoBehaviour
                 break;
             case Enums.AppStates.AdviceUserWithPw: AdviceSec(Enums.AdviceType.UserWithPw);
                 break;
-            case Enums.AppStates.AdviceCheckPw: AdviceSec(Enums.AdviceType.CheckPw);
-                break;
             case Enums.AppStates.AdviceVerifyAccess: AdviceSec(Enums.AdviceType.VerifyAccess);
+                break;
+            case Enums.AppStates.Settings: SettingsSec();
                 break;
             case Enums.AppStates.StartGame:
                 break;
-
-
-            
             default:
                 throw new ArgumentOutOfRangeException(nameof(gameState), gameState, null);
         }
@@ -151,7 +151,6 @@ public class GameManager : MonoBehaviour
         _userInfo.ResetConsole();
         CreateNewUser.gameObject.GetComponent<TabInputField>().EnableScript(true);
         CreateNewUser.gameObject.GetComponent<CreateNewUserController>().EnableScript(true);
-        //_checkUserPassword.EnableScript(false);
         CreateNewPassword.Instance.EnableScript(false);
     }
 
@@ -192,9 +191,6 @@ public class GameManager : MonoBehaviour
             case Enums.AdviceType.UserWithPw:
                 AdviceC.gameObject.AddComponent<Advice_DeleteUserWithPw>();
                 break;
-            case Enums.AdviceType.CheckPw:
-                
-                break;
             case Enums.AdviceType.VerifyAccess:
                 AdviceC.gameObject.AddComponent<Advice_VerifyAccess>();
                 break;
@@ -207,6 +203,13 @@ public class GameManager : MonoBehaviour
         CreateNewPw.gameObject.GetComponent<TabInputField>().EnableScript(true);
         //_checkUserPassword.EnableScript(false);
     }
-    
+
+    public void SettingsSec()
+    {
+        TurnOffAllPanels();
+        SetCanvasState.SetState(true,SettingsC);
+        CreateNewUser.gameObject.GetComponent<TabInputField>().EnableScript(false);
+        CreateNewUser.gameObject.GetComponent<CreateNewUserController>().EnableScript(false);
+    }
     
 }

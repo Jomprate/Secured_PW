@@ -6,28 +6,33 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public abstract class AdvicesAbs : MonoBehaviour, IAdvice,UsePW
+public abstract class AdvicesAbs : MonoBehaviour
 {
     public InputManager InputManager { get; set; }
     public InputAction _uiInputs;
+    private LanguageManager lang;
     
     public Transform parentT;
 
-    public string titleText;
+    public string titleTextId;
 
-    public string messageText;
+    public string messageTextId;
 
-    public string continueBtnText;
+    public string continueBtnTextId;
+    public string returnBtnTextId;
     
     public TextMeshProUGUI Title { get; set; }
     public TextMeshProUGUI Message { get; set; }
     public TextMeshProUGUI ContinueBtnTmp { get; set; }
+    public TextMeshProUGUI ReturnBtnTmp { get; set; }
     public Button ContinueBtn { get; set; }
     public Button ReturnBtn { get; set; }
 
     public bool RequirePw { get; set; }
     public bool requirePw;
     public TMP_InputField InputFieldPw { get; set; }
+    
+    public TextMeshProUGUI InputFieldPwPh { get; set; }
     public virtual void Awake()
     {
         InputManager = InputManager.instance;
@@ -37,11 +42,32 @@ public abstract class AdvicesAbs : MonoBehaviour, IAdvice,UsePW
         RequirePw = requirePw;
         ShowHidePw();
         SetTexts();
+        
+        
+        
         EnableScript(true);
     }
 
-   
-    
+    private void Start()
+    {
+        lang = LanguageManager.instance;
+        LanguageManager.OnLanguageChange += ChangeMessage;
+        ChangeMessage();
+    }
+
+    public void ChangeMessage()
+    {
+        Title.text = lang.langReader.getString(titleTextId);
+        Message.text = lang.langReader.getString(messageTextId);
+        ContinueBtnTmp.text = lang.langReader.getString(continueBtnTextId);
+        ReturnBtnTmp.text = lang.langReader.getString(returnBtnTextId);
+    }
+
+    private void OnDestroy()
+    {
+        LanguageManager.OnLanguageChange -= ChangeMessage;
+    }
+
     private void GetNeeded()
     {
         parentT = transform.GetChild(0).GetChild(1);
@@ -52,7 +78,7 @@ public abstract class AdvicesAbs : MonoBehaviour, IAdvice,UsePW
         InputFieldPw = parentT.GetChild(4).GetComponent<TMP_InputField>();
 
         ContinueBtnTmp = ContinueBtn.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-
+        ReturnBtnTmp = ReturnBtn.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 
     private void SetButtonsV() {
@@ -61,33 +87,25 @@ public abstract class AdvicesAbs : MonoBehaviour, IAdvice,UsePW
     }
 
     private void SetTexts() {
-        Title.text = titleText;
-        Message.text = messageText;
-        ContinueBtnTmp.text = continueBtnText;
+        Title.text = titleTextId;
+        Message.text = messageTextId;
+        ContinueBtnTmp.text = continueBtnTextId;
     }
     
     private void ShowHidePw() => InputFieldPw.gameObject.SetActive(RequirePw);
 
-    public virtual void EnableScript(bool enable) {
+    protected void EnableScript(bool enable) {
         switch (enable) {
-            case true: _uiInputs.performed +=  EnterKey; 
-                break;
-            case false: _uiInputs.performed -=  EnterKey; 
-                break;
+            case true: _uiInputs.performed +=  EnterKey; break;
+            case false: _uiInputs.performed -=  EnterKey; break;
         }
     }
 
     protected virtual void EnterKey(InputAction.CallbackContext context){} 
 
-    public virtual void CheckInsertedPassword()
-    {
-    }
+    public virtual void CheckInsertedPassword() { }
 
-    public virtual void Continue()
-    {
-    }
+    protected virtual void Continue() { }
 
-    public virtual void Return()
-    {
-    }
+    protected virtual void Return() { }
 }

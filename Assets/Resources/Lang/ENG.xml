@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+
+  <English>
+
+
+
+      <string name="WelcomeTitle">Welcome</string>
+      <string name="WelcomeM1">I developed this application in order to have the passwords you require in a simple and secure way. What you save here will only be on your computer, and nothing will be transferred over the internet.</string>
+      <string name="WelcomeM2">At the bottom you will see the created users, if there aren't, click on the + sign.</string>
+
+      <string name="CNU_Title">Create new user</string>
+      <string name="CNU_M1">Welcome, we are going to create a new user, for this you must enter the name of your user and a respective password if you wish.</string>
+      <string name="CNU_UPW">Press this button to activate the use of password.</string>
+      <string name="CNU_UE">Press this button to activate its encryption.</string>
+
+
+      <string name="User">User</string>
+      <string name="UserEx">Your user name (min 7)</string>
+      <string name="Password">Password</string>
+      <string name="PasswordEx">Your password (min 7)</string>
+      <string name="Encrypt">Encrypt</string>
+      <string name="Create">Create</string>
+      <string name="Return">Return</string>
+      <string name="Continue">Continue</string>
+      <string name="Email">Email</string>
+      <string name="Description">Description</string>
+
+
+      <string name="CNP_Title">Create new password</string>
+      <string name="CNP_M1">Welcome, we are going to create a new password, to do this enter the information you require, the ID is how your password will be named.</string>
+      <string name="Id">Id</string>
+      <string name="IdEx">password name</string>
+      <string name="EmailPh2">your email</string>
+      <string name="UserPh2">your user</string>
+      <string name="PasswordPh2">your password</string>
+      <string name="DescriptionPh2">Description or other information you require.</string>
+
+
+      <string name="Advice_DUNP_Title">Delete User</string>
+      <string name="Advice_DUNP_Message">Do you really want to delete this user?\n\nYou will not be able to recover it after this.</string>
+      <string name="Advice_DUNP_ContBtn">Delete</string>
+
+      <string name="Advice_DUWP_Title">Delete User</string>
+      <string name="Advice_DUWP_Message">Do you really want to delete this user?\n\nYou will not be able to recover it after this, and since this user has a password you must insert it.</string>
+      <string name="Advice_DUWP_ContBtn">Delete</string>
+
+      <string name="Advice_DP_Title">Delete password</string>
+      <string name="Advice_DP_Message">Do you really want to delete this password?\n\nYou will not be able to recover it after this</string>
+      <string name="Advice_DP_ContBtn">Delete</string>
+
+      <string name="Advice_VA_Title">Check</string>
+      <string name="Advice_VA_Message">Welcome, but before accessing to view the passwords\n\nYou must insert the user's password.</string>
+      <string name="Advice_VA_ContBtn">Access</string>
+
+      <string name="Settings_Title">Settings</string>
+     
+  </English>
+
+</languages>
